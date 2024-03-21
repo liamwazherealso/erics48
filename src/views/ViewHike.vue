@@ -1,0 +1,440 @@
+<template>
+    <div class="max-w-screen-sm mx-auto px-4 py-10">
+    <!-- App error and status Msg -->
+    <div
+      v-if="statusMsg || errorMsg"
+      class="mb-10 p-4 rounded-md shadow-md bg-lightStone"
+    >
+      <p class="text-darkSky">
+        {{ statusMsg }}
+      </p>
+      <p class="text-red-500">
+        {{ errorMsg }}
+      </p>
+    </div>
+
+    <div v-if="dataLoaded">
+
+      <!-- General Hike Info Card -->
+      <div
+        class="flex flex-col items-center p-8 rounded-md shadow-md 
+      bg-lightStone relative"
+      >
+        <!-- We're only rendering the following icon if the user is logged in -->
+        <div v-if="user" class="flex absolute left-2 top-2 gap-x-2">
+          <!-- Edit Hike Button -->
+          <div
+            class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer
+        bg-darkSky shadow-lg"
+            @click="editMode"
+          >
+            <img class="h-3.5 w-auto" src="@/assets/images/pencil-icon.png" alt="pencil" />
+          </div>
+
+          <!-- Delete hike button  -->
+          <div
+            @click="deleteHike"
+            class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer
+            bg-darkSky shadow-lg"
+          >
+            <img class="h-3.5 w-auto" src="@/assets/images/trash-can-icon.png" alt="trash_can" />
+          </div>
+        </div>
+
+        <!-- Mountain image -->
+        <img
+          class="h-24 w-auto"
+          src="@/assets/images/mountain-icon.png"
+          alt="mountain"
+        />
+
+        <!-- Mountain name and edit mode input -->
+        <div class="w-full mt-6">
+          <label for="mountain-name" class="mb-1 text-sm text-darkSky" v-if="edit">
+            Edit Mountain Name:
+          </label>
+          <select 
+            name="mountain-name"
+            class="p-2 focus:outline-none" 
+            id="mountain-name"
+            required
+            v-if="edit"
+            v-model="data.mountainName"
+        >
+            <!-- Mountain Name Options (ordered by elevation) -->
+            <option value="select-mountain">select-mountain</option>
+            <option value="Washington">Mount Washington - 6,288 ft</option>
+            <option value="Adams">Mount Adams - 5,774 ft</option>
+            <option value="Jefferson">Mount Jefferson - 5,712 ft</option>
+            <option value="Monroe">Mount Monroe - 5,384 ft</option>
+            <option value="Madison">Mount Madison - 5,367 ft</option>
+            <option value="Lafayette">Mount Lafayette - 5,260 ft</option>
+            <option value="Lincoln">Mount Lincoln - 5,089 ft</option>
+            <option value="South Twin">South Twin Mountain - 4,902 ft</option>
+            <option value="Carter Dome">Carter Dome - 4,832 ft</option>
+            <option value="Moosilauke">Mount Moosilauke - 4,802 ft</option>
+            <option value="Eisenhower">Mount Eisenhower - 4,780 ft</option>
+            <option value="North Twin">North Twin Mountain - 4,761 ft</option>
+            <option value="Carrigain">Mount Carrigain - 4,700 ft</option>
+            <option value="Bond">Mount Bond - 4,698 ft</option>
+            <option value="Middle Carter">Middle Carter Mountain - 4,610 ft</option>
+            <option value="West Bond">West Bond - 4,540 ft</option>
+            <option value="Garfield">Mount Garfield - 4,500 ft</option>
+            <option value="Liberty">Mount Liberty - 4,459 ft</option>
+            <option value="South Carter">South Carter Mountain - 4,430 ft</option>
+            <option value="Wildcat (A Peak)">Wildcat Mountain (A Peak) - 4,422 ft</option>
+            <option value="Hancock">Mount Hancock - 4,420 ft</option>
+            <option value="South Kinsman">South Kinsman Mountain - 4,358 ft</option>
+            <option value="Field">Mount Field - 4,340 ft</option>
+            <option value="Osceola">Mount Osceola - 4,340 ft</option>
+            <option value="Flume">Mount Flume - 4,328 ft</option>
+            <option value="South Hancock">South Hancock Mountain - 4,319 ft</option>
+            <option value="Pierce">Mount Pierce - 4,310 ft</option>
+            <option value="North Kinsman">North Kinsman Mountain - 4,293 ft</option>
+            <option value="Willey">Mount Willey - 4,285 ft</option>
+            <option value="Bondcliff">Bondcliff - 4,265 ft</option>
+            <option value="Zealand">Mount Zealand - 4,260 ft</option>
+            <option value="North Tripyramid">North Tripyramid - 4,180 ft</option>
+            <option value="Cabot">Mount Cabot - 4,170 ft</option>
+            <option value="East Osceola">East Osceola - 4,156 ft</option>
+            <option value="Middle Tripyramid">Middle Tripyramid - 4,140 ft</option>
+            <option value="Cannon">Cannon Mountain - 4,100 ft</option>
+            <option value="Hale">Mount Hale - 4,054 ft</option>
+            <option value="Jackson">Mount Jackson - 4,4,052 ft</option>
+            <option value="Tom">Mount Tom - 4,051 ft</option>
+            <option value="Wildcat (D Peak)">Wildcat Mountain (D Peak) - 4,050 ft</option>
+            <option value="Moriah">Mount Moriah - 4,049 ft</option>
+            <option value="Passaconaway">Mount Passaconaway - 4,043 ft</option>
+            <option value="Owl's Head">Owl's Head - 4,025 ft</option>
+            <option value="Galehead">Mount Galehead - 4,024 ft</option>
+            <option value="Whiteface">Mount Whiteface - 4,020 ft</option>
+            <option value="Waumbek">Mount Waumbek - 4,006 ft</option>
+            <option value="Isolation">Mount Isolation - 4,004 ft</option>
+            <option value="Tecumseh">Mount Tecumseh - 4,003 ft</option>
+            <!-- End of Mountain Names Options -->
+        </select>
+          <!-- If edit mode has not been clicked -->
+          <h1 v-else class="text-darkSky text-2xl text-center">
+            {{ data.mountainName }}
+          </h1>
+        </div>
+      </div>
+
+      <!-- Additional Hike Info -->
+      <div class="mt-10 p-8 rounded-md flex flex-col flex-wrap item-center
+      bg-lightStone shadow-md"
+      >
+
+            <!-- Trail name container and label -->
+            <div class="flex flex-1 flex-col">
+              <label for="trail-name" class="mb-1 text-sm text-darkSky">
+                Trail Name
+              </label>
+
+              <!-- Trail name input if edit mode is toggled -->
+              <input 
+                v-if="edit"
+                type="text"
+                required
+                class="p-2 w-full focus:outline-none"
+                id="trail-name"
+                placeholder="Enter trail name here"
+                v-model="data.trailName"
+                />
+
+                <!-- Trail name data if edit mode is not toggled -->
+              <p v-else>{{ data.trailName }}</p>
+
+            </div>
+
+            <!-- Hike date container and label -->
+            <div class="flex flex-1 flex-col">
+              <label for="hike-date" class="mb-1 text-sm text-darkSky">
+                Date of Hike
+              </label>
+
+              <!-- Hike date input if edit mode is toggled -->
+              <input 
+                v-if="edit"
+                type="date"
+                required
+                class="p-2 focus:outline-none"
+                id="hike-date"
+                value=""
+                v-model="hikeDate"
+                />
+
+              <!-- Hike date data if edit mode is not toggled -->
+              <p v-else>{{ data.hikeDate }}</p>
+
+            </div>
+            
+            <!-- Hike duration container and label -->
+            <div class="flex flex-1 flex-col">
+              <label for="hike-duration-edit" class="mb-1 text-sm text-darkSky">
+                Hike Duration
+              </label>
+
+              <!-- Hike duration input if edit mode is toggled -->
+              <input
+                v-if="edit"
+                type="text"
+                required
+                id="hike-duration"
+                pattern="^[0-9]{1,2}:[0-5][0-9]$"
+                value="00:00"
+                class="p-2 w-full focus:outline-none"
+                v-model="data.hikeDuration"
+              />
+
+              <!-- Hike duration data if edit mode not toggled -->
+              <p v-else>{{ data.hikeDuration }}</p>
+
+            </div>
+
+            <!-- Trail condition container and label -->
+            <div class="flex flex1 flex-col">
+                <label for="trail-conditions-edit" class="mb-1 text-sm text-darkSky">
+                 Trail Conditions
+                </label>
+
+                <!-- Trail conditions select if edit mode is toggled -->
+                <select
+                    v-if="edit"
+                    name="trail-conditions"
+                    class="p-2 w-full focus:outline-none" 
+                    id="trail-conditions"
+                    required
+                    v-model="trailConditions"
+                >
+                    <option value="select-condition">select-condition</option>
+                    <option value="snow">Snow Covered Trail</option>
+                    <option value="ice">Ice Covered Trail</option>
+                    <option value="mud">Mud Covered Trail</option>
+                    <option value="leaves">Leaf Covered Trail</option>
+                    <option value="wet">Wet Trail</option>
+                    <option value="dry">Dry Trail</option>
+                    <option value="water">Running or Standing Water</option>
+                </select>
+
+                <!-- Trail conditions if edit mode not toggled -->
+                <p v-else>{{ data.trailConditions }}</p>
+
+            </div>
+
+            <!-- Hike difficulty container and label -->
+            <div class="flex flex1 flex-col">
+                <label for="hike-difficulty-edit" class="mb-1 text-sm text-darkSky">
+                    Hike Difficulty 
+                </label>
+
+                <!-- Hike Difficulty select if edit mode is toggled -->
+                <select
+                    v-if="edit"
+                    name="hike-difficulty"
+                    class="p-2 w-full focus:outline-none" 
+                    id="hike-difficulty"
+                    required
+                    v-model="hikeDifficulty"
+                >
+                    <option value="great">🤗</option>
+                    <option value="good">😃</option>
+                    <option value="okay">😐</option>
+                    <option value="bad">😖</option>
+                    <option value="awful">🤬</option>
+                </select>
+
+                <!-- Hike difficulty data if edit mode not toggled -->
+                <p v-else>{{ data.hikeDifficulty }}</p>
+
+            </div>
+
+            <!-- Hike review container and label -->
+            <div class="flex flex-1 flex-col">
+              <label for="hike-review-edit" class="mb-1 text-sm text-darkSky">
+                Hike Review
+              </label>
+
+              <!-- Hike review text area if edit mode is toggled -->
+              <textarea 
+                    v-if="edit"
+                    type="text"
+                    required
+                    class="p-2 w-full focus:outline-none"
+                    id="hike-review"
+                    placeholder="Please include any further thoughts on the hike here"
+                    v-model="hikeReview"
+              />
+
+              <!-- Hike review data if edit mode not toggled -->
+              <p v-else>{{ data.hikeReview }}</p>
+
+            </div>
+
+            <!-- Delete hike button -->
+            <img
+              v-if="edit"
+              @click="deleteHike(item.id)"
+              class="absolute h-4 w-auto -left-5 cursor-pointer"
+              src="@/assets/images/trash-can-icon.png"
+              alt="trash-can"
+            />
+
+      </div>
+
+      <!-- Update -->
+      <button
+        v-if="edit"
+        @click="update"
+        type="button"
+        class="mt-10 py-2 px-6 rounded-sm self-start text-sm        text-white
+        bg-darkSky duration-200 border-solid border-2 border-transparent
+        hover:border-darkSky hover:bg-white hover:text-darkSky"
+      >
+        Update Hike
+      </button>
+    </div>
+  </div>
+</template>
+
+<script setup>
+    // Imports
+    import { ref, computed } from 'vue';
+    import { supabase } from '@/supabase/supabaseClient';
+    import { useRoute, useRouter } from 'vue-router';
+    import store from '../store/index';
+
+
+    // Create data
+    const data = ref(null);
+    const dataLoaded = ref(null);
+    const errorMsg = ref(null);
+    const statusMsg = ref(null);
+    const route = useRoute();
+    const router = useRouter();
+    const user = computed(() => store.state.user);
+
+    // Get current id of route
+    const currentId = route.params.hikeId; // This param was defined in our router
+
+    // Get hike data
+    const getData = async () => {
+        // Try to contact supabase for hikes data
+        try {
+            const { data: hikes, error } = await supabase
+                .from('hikes')
+                .select('*')
+                .eq('id', currentId);
+
+            // If an error is received from supabase, throw it:
+            if (error) throw error;
+
+            // Assign the value of 'data' to the data response received
+            data.value = hikes[0]; // This valued is returned from the database as an array
+
+            console.log(hikes[0]);
+            
+
+            // Update the value of 'dataLoaded' to true
+            dataLoaded.value = true; 
+
+        }
+
+        // If an error is received, handle the error
+        catch (error) {
+            // Assign the value of the error message to errorMsg.value
+            errorMsg.value = error.message;
+
+            // Remove the rendered error after 5 seconds
+            setTimeout(() => {
+                errorMsg.value = null;
+            }, 5000);
+        }
+    };
+
+    // Call the getData function
+    getData();
+
+    // Delete hike
+    const deleteHike = async () => {
+        // Indicate to supabase that we want to delete this workout that corresponds to this specific id
+        try {
+            // Destructure the response from supabase, and catch the error if there is one
+            const { error } = await supabase
+                .from('hikes')
+                .delete()
+                .eq('id', currentId);
+
+            // If there's an error, throw the user to the catch block
+            if (error) throw error;
+
+            // Push the user back to the 'Home' route
+            router.push({ name: "Home" });
+        }
+        catch (error) {
+            // Assign the value of error.msg to errorMsg
+            errorMsg.value = `Error: ${error.msg}`;
+
+            // Timeout the error message
+            setTimeout(() => {
+                errorMsg.value = null;
+            }, 5000);
+        }
+    };
+
+    // Edit mode
+    const edit = ref(false);
+
+    const editMode = () => {
+        // This will alow the user to toggle edit mode
+        edit.value = !edit.value;
+    };
+    
+    // Update hike
+    const update = async () => {
+      // Indicate to supabase that you want to update the hike that matches the current id
+      try {
+        // Destructure the response from supabase. Catch the error if one is present
+        console.log(data.value.mountainName, data.value.trailName, data.value.hikeDate);
+        const { error } = await supabase
+          .from('hikes')
+          .update({
+            mountainName: data.value.mountainName,
+            trailName: data.value.trailName,
+            hikeDate: data.value.hikeDate,
+            hikeDuration: data.value.hikeDuration,
+            trailConditions: data.value.trailConditions,
+            hikeDifficulty: data.value.hikeDifficulty,
+            hikeReview: data.value.hikeReview,
+          })
+          .eq('id', currentId);
+
+          // If there's an error, throw to the catch block
+          if (error) throw error;
+
+          // Detoggle edit mode
+          edit.value = false;
+
+          // Post a status message
+          statusMsg.value = "Success: Hike Updated!";
+
+          // Remove status message after 5 seconds
+          setTimeout(() => {
+            statusMsg.value = null;
+          }, 5000);
+
+      }
+
+      // Error catching
+      catch {
+        // Post the error message from supabase
+        errorMsg.value = `Error: ${error.message}`;
+
+        // Remove error message after 5 seconds
+        setTimeout(() => {
+          errorMsg.value = null;
+        }, 5000);
+      }
+    };
+
+</script>
