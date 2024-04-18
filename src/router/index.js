@@ -49,7 +49,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/view-hike/:hikeId", // This is a unique parameter
+      path: "/view-hike/:hikeId", // Dynamic route with a parameter
       name: "View-Hike",
       component: ViewHike,
       meta: {
@@ -62,29 +62,32 @@ const router = createRouter({
 
 // Change document titles
 router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.title} | Eric's 48`;
+  document.title = `${to.meta.title} | Eric's 48`; // Update document title to match the route name
   next();
 });
 
 let localUser;
 
+// Function to get user session
 async function getUser(next) {
 	localUser = await supabase.auth.getSession();
 	if (localUser.data.session == null) {
-		next('/login')
+		next('/login') // Redirect to 'login' view if user session is null
 	}
 	else {
 		next();
 	}
 };
 
+// Check to see if authentication is required before each route navigation
 router.beforeEach((to, from, next) => {
 	if (to.meta.requiresAuth) {
-		getUser(next);
+		getUser(next); // Call 'getUser' function if authentication is needed
 	}
 	else {
-		next();
+		next(); // Else, proceed to desired route
 	}
 })
 
+// Export the router instance
 export default router;
