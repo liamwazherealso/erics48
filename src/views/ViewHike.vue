@@ -51,68 +51,11 @@
         <!-- Mountain name and edit mode input -->
         <div class="w-full mt-6">
           <label for="mountain-name" class="mb-1 text-sm text-darkSky" v-if="edit">
-            Edit Mountain Name:
+            Edit Mountain Name
           </label>
-          <select 
-            name="mountain-name"
-            class="p-2 focus:outline-none" 
-            id="mountain-name"
-            required
-            v-if="edit"
-            v-model="data.mountainName"
-        >
-            <!-- Mountain Name Options (ordered by elevation) -->
-            <option value="select-mountain">select-mountain</option>
-            <option value="Washington">Mount Washington - 6,288 ft</option>
-            <option value="Adams">Mount Adams - 5,774 ft</option>
-            <option value="Jefferson">Mount Jefferson - 5,712 ft</option>
-            <option value="Monroe">Mount Monroe - 5,384 ft</option>
-            <option value="Madison">Mount Madison - 5,367 ft</option>
-            <option value="Lafayette">Mount Lafayette - 5,260 ft</option>
-            <option value="Lincoln">Mount Lincoln - 5,089 ft</option>
-            <option value="South Twin">South Twin Mountain - 4,902 ft</option>
-            <option value="Carter Dome">Carter Dome - 4,832 ft</option>
-            <option value="Moosilauke">Mount Moosilauke - 4,802 ft</option>
-            <option value="Eisenhower">Mount Eisenhower - 4,780 ft</option>
-            <option value="North Twin">North Twin Mountain - 4,761 ft</option>
-            <option value="Carrigain">Mount Carrigain - 4,700 ft</option>
-            <option value="Bond">Mount Bond - 4,698 ft</option>
-            <option value="Middle Carter">Middle Carter Mountain - 4,610 ft</option>
-            <option value="West Bond">West Bond - 4,540 ft</option>
-            <option value="Garfield">Mount Garfield - 4,500 ft</option>
-            <option value="Liberty">Mount Liberty - 4,459 ft</option>
-            <option value="South Carter">South Carter Mountain - 4,430 ft</option>
-            <option value="Wildcat (A Peak)">Wildcat Mountain (A Peak) - 4,422 ft</option>
-            <option value="Hancock">Mount Hancock - 4,420 ft</option>
-            <option value="South Kinsman">South Kinsman Mountain - 4,358 ft</option>
-            <option value="Field">Mount Field - 4,340 ft</option>
-            <option value="Osceola">Mount Osceola - 4,340 ft</option>
-            <option value="Flume">Mount Flume - 4,328 ft</option>
-            <option value="South Hancock">South Hancock Mountain - 4,319 ft</option>
-            <option value="Pierce">Mount Pierce - 4,310 ft</option>
-            <option value="North Kinsman">North Kinsman Mountain - 4,293 ft</option>
-            <option value="Willey">Mount Willey - 4,285 ft</option>
-            <option value="Bondcliff">Bondcliff - 4,265 ft</option>
-            <option value="Zealand">Mount Zealand - 4,260 ft</option>
-            <option value="North Tripyramid">North Tripyramid - 4,180 ft</option>
-            <option value="Cabot">Mount Cabot - 4,170 ft</option>
-            <option value="East Osceola">East Osceola - 4,156 ft</option>
-            <option value="Middle Tripyramid">Middle Tripyramid - 4,140 ft</option>
-            <option value="Cannon">Cannon Mountain - 4,100 ft</option>
-            <option value="Hale">Mount Hale - 4,054 ft</option>
-            <option value="Jackson">Mount Jackson - 4,4,052 ft</option>
-            <option value="Tom">Mount Tom - 4,051 ft</option>
-            <option value="Wildcat (D Peak)">Wildcat Mountain (D Peak) - 4,050 ft</option>
-            <option value="Moriah">Mount Moriah - 4,049 ft</option>
-            <option value="Passaconaway">Mount Passaconaway - 4,043 ft</option>
-            <option value="Owl's Head">Owl's Head - 4,025 ft</option>
-            <option value="Galehead">Mount Galehead - 4,024 ft</option>
-            <option value="Whiteface">Mount Whiteface - 4,020 ft</option>
-            <option value="Waumbek">Mount Waumbek - 4,006 ft</option>
-            <option value="Isolation">Mount Isolation - 4,004 ft</option>
-            <option value="Tecumseh">Mount Tecumseh - 4,003 ft</option>
-            <!-- End of Mountain Names Options -->
-        </select>
+
+          <Autocomplete v-if="edit" :source="peaks" v-model="data.mountainName" />
+
           <!-- If edit mode has not been clicked -->
           <h1 v-else class="text-darkSky text-2xl text-center">
             {{ data.mountainName }}
@@ -161,7 +104,7 @@
                 class="p-2 focus:outline-none"
                 id="hike-date"
                 value=""
-                v-model="hikeDate"
+                v-model="data.hikeDate"
                 />
 
               <!-- Hike date data if edit mode is not toggled -->
@@ -205,7 +148,7 @@
                     class="p-2 w-full focus:outline-none" 
                     id="trail-conditions"
                     required
-                    v-model="trailConditions"
+                    v-model="data.trailConditions"
                 >
                     <option value="select-condition">select-condition</option>
                     <option value="snow">Snow Covered Trail</option>
@@ -235,7 +178,7 @@
                     class="p-2 w-full focus:outline-none" 
                     id="hike-difficulty"
                     required
-                    v-model="hikeDifficulty"
+                    v-model="data.hikeDifficulty"
                 >
                     <option value="great">🤗</option>
                     <option value="good">😃</option>
@@ -263,7 +206,7 @@
                     class="p-2 w-full focus:outline-none"
                     id="hike-review"
                     placeholder="Please include any further thoughts on the hike here"
-                    v-model="hikeReview"
+                    v-model="data.hikeReview"
               />
 
               <!-- Hike review data if edit mode not toggled -->
@@ -303,6 +246,8 @@
     import { supabase } from '@/supabase/supabaseClient';
     import { useRoute, useRouter } from 'vue-router';
     import store from '../store/index';
+    import peaks from '@/peaks.json';
+    import Autocomplete from '@/components/Autocomplete.vue';
 
 
     // Create data
@@ -332,8 +277,6 @@
             // Assign the value of 'data' to the data response received
             data.value = hikes[0]; // This valued is returned from the database as an array
 
-            console.log(hikes[0]);
-            
 
             // Update the value of 'dataLoaded' to true
             dataLoaded.value = true; 
@@ -395,7 +338,8 @@
       // Indicate to supabase that you want to update the hike that matches the current id
       try {
         // Destructure the response from supabase. Catch the error if one is present
-        console.log(data.value.mountainName, data.value.trailName, data.value.hikeDate);
+;
+
         const { error } = await supabase
           .from('hikes')
           .update({
