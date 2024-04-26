@@ -1,8 +1,27 @@
 <template>
-    <div class="max-w-screen-sm mx-auto px-4 py-10">
+    <!-- Landing page section -->
+    <section class="landing">
+        <div class="p-8 flex flex-col items-center">
+            <h1 class="text-4xl text-white font-bold mb-16">
+                Chronicle your White Mountain adventures
+            </h1>
+
+            <h3 class="text-white text-2xl mb-8">
+                Log your hikes down to the finest details
+            </h3>
+
+            <p class="text-white mb-4">
+                Register below
+                <font-awesome-icon icon="arrow-down" style="color: #ffffff;" />
+            </p>
+
+        </div>
+    </section>
+
+    <section class="max-w-screen-sm mx-auto px-4 py-10">
         <!-- Error Handling -->
         <!-- Error div will be conditionally rendered -->
-        <div v-if="errorMsg" class="mb-10 p-4 rounded md bg-stone-100 shadow-lg">
+        <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-stone-100 shadow-lg">
             <p class="text-red-500">
                 {{ errorMsg }}
             </p>
@@ -59,7 +78,7 @@
             </router-link>
 
         </form>
-    </div>
+    </section>
 </template>
 
 <script setup>
@@ -67,6 +86,9 @@
 import { ref } from 'vue';
 import { supabase } from '../supabase/supabaseClient.js';
 import { useRouter } from 'vue-router';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+
 
 // Data and variables
 const router = useRouter();
@@ -115,3 +137,16 @@ const register = async () => {
 };
 
 </script>
+
+<style>
+    .landing {
+        background-image: url('@/assets/images/backgrounds/landing.jpg');
+        background-size: cover;
+        background-position: center;
+        padding-top: 350px;
+        padding-bottom: 350px;
+        padding-left: 500px;
+        padding-right: 500px;
+
+    }
+</style>

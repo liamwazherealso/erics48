@@ -8,7 +8,7 @@
                 <router-link class="hover:bg-reallyLightBrown cursor-pointer" :to="{ name: 'Home' }">
                     <img src="../assets/images/hiker.png" alt="Hiker Image" class="w-14 hover:border-white">
                 </router-link>
-                <h1 class="text-xl font-ProtestRiot">Eric's 48</h1>
+                <h1 class="text-2xl font-ProtestRiot">Eric's 48</h1>
             </div>
             <!-- Navbar Links -->
             <ul class="flex flex-1 justify-end gap-x-10">
