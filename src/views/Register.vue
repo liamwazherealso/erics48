@@ -20,6 +20,7 @@
         </div>
     </section>
 
+    <!-- Account Registration Section -->
     <section id="registerSection" ref="registerSection" class="max-w-screen-sm mx-auto px-4 py-32">
         <!-- Error Handling -->
         <!-- Error div will be conditionally rendered -->
