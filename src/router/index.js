@@ -10,7 +10,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      // This object establishes the Register view as the default page
       path: "/",
+      redirect: { name: "Register" } // Redirect to Register component
+    },
+    {
+      path: "/home",
       name: "Home",
       component: Home,
       meta: {
@@ -30,11 +35,12 @@ const router = createRouter({
       },
     },
     {
+      // This the default page
       path: "/register",
       name: "Register",
       component: Register,
       meta: {
-        title: "Register",
+        title: "Welcome",
         requiresAuth: false,
       },
     },

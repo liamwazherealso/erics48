@@ -1,8 +1,8 @@
 <template>
     <!-- Landing page section -->
-    <section class="landing">
+    <section class="landing mb-10">
         <div class="p-8 flex flex-col items-center">
-            <h1 class="text-4xl text-white font-bold mb-16">
+            <h1 class="text-4xl text-white font-bold mb-16 mt-48">
                 Chronicle your White Mountain adventures
             </h1>
 
@@ -10,15 +10,17 @@
                 Log your hikes down to the finest details
             </h3>
 
-            <p class="text-white mb-4">
+            <a href="#registerSection" class="text-white mb-4 underline">
                 Register below
-                <font-awesome-icon icon="arrow-down" style="color: #ffffff;" />
-            </p>
-
+            </a>
+            <!-- Font Awesome down arrow icon -->
+            <a href="#registerSection">
+                <i class="fa-solid fa-arrow-down fa-beat fa-2xl mt-8" style="color: #fafafa;"></i>
+            </a>
         </div>
     </section>
 
-    <section class="max-w-screen-sm mx-auto px-4 py-10">
+    <section id="registerSection" ref="registerSection" class="max-w-screen-sm mx-auto px-4 py-32">
         <!-- Error Handling -->
         <!-- Error div will be conditionally rendered -->
         <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-stone-100 shadow-lg">
@@ -86,9 +88,6 @@
 import { ref } from 'vue';
 import { supabase } from '../supabase/supabaseClient.js';
 import { useRouter } from 'vue-router';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-
 
 // Data and variables
 const router = useRouter();
@@ -96,6 +95,7 @@ const email = ref(null);
 const password = ref(null);
 const confirmPassword = ref(null);
 const errorMsg = ref(null);
+
 
 // Register function
 const register = async () => {
@@ -136,17 +136,19 @@ const register = async () => {
     }
 };
 
+
 </script>
 
 <style>
     .landing {
-        background-image: url('@/assets/images/backgrounds/landing.jpg');
+        background-image: url('@/assets/images/backgrounds/twilight.jpg');
         background-size: cover;
         background-position: center;
         padding-top: 350px;
         padding-bottom: 350px;
         padding-left: 500px;
         padding-right: 500px;
+        
 
     }
 </style>
