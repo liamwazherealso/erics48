@@ -15,10 +15,15 @@
                 <router-link v-if="user" class="hover:text-beige cursor-pointer" :to="{ name: 'LogHike' }">
                     Log Hike
                 </router-link>
+                <router-link class="hover:text-beige cursor-pointer" :to="{ name: 'About' }">
+                    About
+                </router-link>
                 <router-link v-if="!user" class="hover:text-beige cursor-pointer" :to="{ name: 'Login' }">
                     Login
                 </router-link>
-                <li v-if="user" @click="logout" class="hover:text-beige cursor-pointer">Logout</li>
+                <li v-if="user" @click="logout" class="hover:text-beige cursor-pointer">
+                    Logout
+                </li>
             </ul>
         </nav>
     </header>

@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import LogHike from "../views/LogHike.vue";
 import ViewHike from "../views/ViewHike.vue";
+import About from "../views/About.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,6 +61,15 @@ const router = createRouter({
       component: ViewHike,
       meta: {
         title: "View Hike",
+        requiresAuth: false,
+      },
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: About,
+      meta: {
+        title: "About",
         requiresAuth: false,
       },
     },
