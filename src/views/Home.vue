@@ -1,5 +1,5 @@
 <template>
-    <div v-if="dataLoaded" id="home" class="container mt-10 px-4">
+    <div v-if="dataLoaded" id="home" class="container mx-auto px-4 py-10 max-w-screen-sm">
         <!-- No data div -->
         <div v-if="data.length === 0" class="w-full flex flex-col items-center">
             <h1 class="text-2xl">Looks empty here...</h1>
@@ -12,7 +12,7 @@
         </div>
 
         <!-- Data Card -->
-        <div v-else class="grid grid-col-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div v-else class="flex flex-col space-y-10">
             <router-link 
                 class="flex flex-col items-center bg-lightStone p-8 shadow-md cursor-pointer"
                 :to="{ name: 'View-Hike', params: { hikeId: hike.id }  }"

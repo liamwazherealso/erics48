@@ -62,13 +62,6 @@
     <!-- Password Recovery  -->
         <div v-if="passDiv" class="max-w-screen-sm mx-auto px-4 py-10">
 
-        <!-- Status Handling -->
-        <div v-if="statusMsg" class="mb-10 p-4 rounded-md bg-lightStone shadow-lg">
-            <p class="text-darkSky">
-                {{ statusMsg }}
-            </p>
-        </div>
-
             <!-- Password recovery form -->
             <form 
                 @submit.prevent="recover"
@@ -105,7 +98,6 @@ const router = useRouter();
 const email = ref(null);
 const password = ref(null);
 const errorMsg = ref(null);
-const statusMsg = ref(null);
 const passDiv = ref(false);
 const recoveryEmail = ref(null);
 
@@ -142,16 +134,12 @@ const recover = async () => {
     try {
         const { error } = await supabase.auth.resetPasswordForEmail({
             email: recoveryEmail.value,
-            redirectTo: 'http://localhost:5173/updatepassword'
+            redirectTo: 'http://localhost:5173/updatepassword',
         });
         // If an error is detected, this condition will throw the user into the catch block
         if (error) throw error;
         // Alert user of success
-        statusMsg.value = 'An email has been sent to recover your password';
-        // Timeout
-        setTimeout(() => {
-            statusMsg.value = null;
-        }, 5000);
+        alert('Check your email for the password recovery link');
     }
     catch (error) {
         // Interpolate error into error div 
