@@ -2,7 +2,7 @@
     <div class="max-w-screen-sm mx-auto px-4 py-10">
         <!-- Error Handling -->
         <!-- Error div will be conditionally rendered -->
-        <div v-if="errorMsg" class="mb-10 p-4 rounded md bg-lightStone shadow-lg">
+        <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-lightStone shadow-lg">
             <p class="text-red-500">
                 {{ errorMsg }}
             </p>
@@ -11,7 +11,7 @@
         <!-- Login Form -->
         <form 
             @submit.prevent="login" 
-            class="mb-84 p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
+            class="mb-2 p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
         >
             <h1 class="text-3xl text-darkSky mb-4">Login</h1>
             <!-- Email input -->
@@ -42,6 +42,7 @@
                 Login
             </button>
 
+            <!-- Router link for registration -->
             <router-link 
                 class="text-sm mt-6 text-center" 
                 :to="{ name: 'Register' }"
@@ -49,8 +50,48 @@
                 Don't have an account? <span class="text-darkSky hover:text-lightSky">Register</span>
             </router-link>
 
+            <!-- Text to open password recovery input -->
+            <p @click="openPassDiv" class="text-sm mt-2 text-center hover:cursor-pointer">
+                Having trouble signing in? <span class="text-darkSky hover:text-lightSky">Click here</span>
+            </p>
         </form>
+        
+
     </div>
+
+    <!-- Password Recovery  -->
+        <div v-if="passDiv" class="max-w-screen-sm mx-auto px-4 py-10">
+
+        <!-- Status Handling -->
+        <div v-if="statusMsg" class="mb-10 p-4 rounded-md bg-lightStone shadow-lg">
+            <p class="text-darkSky">
+                {{ statusMsg }}
+            </p>
+        </div>
+
+            <!-- Password recovery form -->
+            <form 
+                @submit.prevent="recover"
+                class="mb-84 p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
+            >
+
+            <h1 class="text-2xl text-darkSky mb-4">Password Recovery</h1>
+
+            <!-- Recovery email input -->
+            <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
+            <input 
+                    type="text" 
+                    required 
+                    class="p-2 focus:outline-none" id="email" 
+                    v-model="recoveryEmail"
+            >
+
+            <!-- Submit email button -->
+            <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
+                Send Recovery Email
+            </button>
+            </form>
+        </div>
 </template>
 
 <script setup>
@@ -64,6 +105,9 @@ const router = useRouter();
 const email = ref(null);
 const password = ref(null);
 const errorMsg = ref(null);
+const statusMsg = ref(null);
+const passDiv = ref(false);
+const recoveryEmail = ref(null);
 
 // Login function
 const login = async () => {
@@ -88,4 +132,34 @@ const login = async () => {
     }
 };
 
+// Open password recovery function
+const openPassDiv = () => {
+    passDiv.value = true;
+};
+
+// Send password recovery email function
+const recover = async () => {
+    try {
+        const { error } = await supabase.auth.resetPasswordForEmail({
+            email: recoveryEmail.value,
+            redirectTo: 'http://localhost:5173/updatepassword'
+        });
+        // If an error is detected, this condition will throw the user into the catch block
+        if (error) throw error;
+        // Alert user of success
+        statusMsg.value = 'An email has been sent to recover your password';
+        // Timeout
+        setTimeout(() => {
+            statusMsg.value = null;
+        }, 5000);
+    }
+    catch (error) {
+        // Interpolate error into error div 
+        errorMsg.value = `Error: ${error.message}`;
+        // Clear and remove the rendered error after 5 seconds
+        setTimeout(() => {
+            errorMsg.value = null;
+        }, 5000);
+    }
+};
 </script>
