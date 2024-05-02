@@ -14,7 +14,7 @@
         <!-- Data Card -->
         <div v-else class="flex flex-col space-y-10">
             <router-link 
-                class="flex flex-col items-center bg-lightStone p-8 shadow-md cursor-pointer"
+                class="flex flex-col items-center bg-lightStone p-8 shadow-md rounded-md cursor-pointer"
                 :to="{ name: 'View-Hike', params: { hikeId: hike.id }  }"
                 v-for="(hike, index) in data"
                 :key="index"
