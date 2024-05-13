@@ -19,7 +19,7 @@
                 v-for="(hike, index) in data"
                 :key="index"
             >
-            <!-- Hike Image -->
+            <!-- Mountain Image -->
             <img 
                 src="@/assets/images/mountain-icon.png" 
                 alt="mountain-icon"

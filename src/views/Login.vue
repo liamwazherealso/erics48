@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-screen-sm mx-auto px-4 py-10">
+    <div class="max-w-screen-sm mx-auto px-4 py-20">
         <!-- Error Handling -->
         <!-- Error div will be conditionally rendered -->
         <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-lightStone shadow-lg">
@@ -132,10 +132,10 @@ const openPassDiv = () => {
 // Send password recovery email function
 const recover = async () => {
     try {
-        const { error } = await supabase.auth.resetPasswordForEmail({
-            email: recoveryEmail.value,
-            redirectTo: 'http://localhost:5173/updatepassword',
+        const { data, error } = await supabase.auth.resetPasswordForEmail(recoveryEmail.value, {
+            redirectTo: 'http://localhost:5173/reset',
         });
+        console.log(recoveryEmail.value);
         // If an error is detected, this condition will throw the user into the catch block
         if (error) throw error;
         // Alert user of success

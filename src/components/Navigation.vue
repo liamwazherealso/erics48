@@ -47,6 +47,10 @@
         // Inform supabase that the user has logged out
         await supabase.auth.signOut();
         console.log('User is logged out');
+
+        // Alert the user of a successful logout
+        alert('You account has been logged out');
+
         // Push the user back to the home page
         router.push({ name: "Home" });
     };

@@ -21,7 +21,7 @@
     </section>
 
     <!-- Account Registration Section -->
-    <section id="registerSection" ref="registerSection" class="max-w-screen-sm mx-auto px-4 py-32">
+    <section id="registerSection" class="max-w-screen-sm mx-auto px-4 py-32">
         <!-- Error Handling -->
         <!-- Error div will be conditionally rendered -->
         <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-stone-100 shadow-lg">
@@ -102,12 +102,8 @@ const errorMsg = ref(null);
 const register = async () => {
     // If the password matches the confirmed password
     if (password.value === confirmPassword.value) {
-        // Try to sign up the user
         try {
-            console.log('Email:', email.value);
-            console.log('Password:', password.value);
-            console.log('Confirm Password:', confirmPassword.value);
-
+            // Try to sign up the user
             const { error } = await supabase.auth.signUp({
                 email: email.value,
                 password: password.value,

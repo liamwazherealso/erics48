@@ -6,6 +6,7 @@ import Register from "../views/Register.vue";
 import LogHike from "../views/LogHike.vue";
 import ViewHike from "../views/ViewHike.vue";
 import About from "../views/About.vue";
+import Reset from "../views/Reset.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,6 +72,16 @@ const router = createRouter({
       meta: {
         title: "About",
         requiresAuth: false,
+      },
+    },
+    {
+      // Page on accessible via emailed link
+      path: "/reset",
+      name: "Reset",
+      component: Reset,
+      meta: {
+        title: "Password Reset",
+        requiresAuth: true,
       },
     },
   ]
