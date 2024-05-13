@@ -14,7 +14,7 @@ const app = createApp(App);
 app.use(router);
 
 // Include session timeout mixin globally
-app.mixin(sessionTimeoutMixin);
+// app.mixin(sessionTimeoutMixin);
 
 // Mount the app
 app.mount('#app');
