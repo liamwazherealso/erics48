@@ -48,6 +48,9 @@ export const sessionTimeoutMixin = {
       supabase.auth.signOut();
       // Redirect the user to the login page
       router.push({ name: 'Login' });
+
+      // Alert the user
+      alert('Your account has been logged out due to inactivity');
     },
   },
 };
