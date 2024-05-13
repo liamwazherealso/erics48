@@ -110,6 +110,10 @@ const register = async () => {
             });
             // If supabase presents an error, throw it:
             if (error) throw error;
+
+            // Alert user to check their email to confirm
+            alert('Check your email to confirm your account');
+
             // If everything checks out, push the user to the Login page
             router.push({ name: "Login" });
         }

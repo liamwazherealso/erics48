@@ -133,7 +133,7 @@ const openPassDiv = () => {
 const recover = async () => {
     try {
         const { data, error } = await supabase.auth.resetPasswordForEmail(recoveryEmail.value, {
-            redirectTo: 'http://localhost:5173/reset',
+            redirectTo: 'https://erics48.vercel.app/reset',
         });
         console.log(recoveryEmail.value);
         // If an error is detected, this condition will throw the user into the catch block
