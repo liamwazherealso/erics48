@@ -302,6 +302,10 @@
     const deleteHike = async () => {
         // Indicate to supabase that we want to delete this workout that corresponds to this specific id
         try {
+          // Display a confirmation dialog
+          const confirmed = window.confirm('Are you sure you want to delete this hike?');
+
+          if (confirmed) {
             // Destructure the response from supabase, and catch the error if there is one
             const { error } = await supabase
                 .from('hikes')
@@ -311,8 +315,13 @@
             // If there's an error, throw the user to the catch block
             if (error) throw error;
 
+            // Alert the user that their hike has been deleted
+            alert('Your hike has been deleted');
+
             // Push the user back to the 'Home' route
             router.push({ name: "Home" });
+          }
+            
         }
         catch (error) {
             // Assign the value of error.msg to errorMsg

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="dataLoaded" id="home" class="container mx-auto px-4 py-10 max-w-screen-sm">
+    <div v-if="dataLoaded" id="home" class="container mx-auto px-4 py-20 max-w-screen-sm">
         <!-- No data div -->
         <div v-if="data.length === 0" class="w-full flex flex-col items-center">
             <h1 class="text-2xl">Looks empty here...</h1>
@@ -11,32 +11,45 @@
             </router-link>
         </div>
 
-        <!-- Data Card -->
-        <div v-else class="flex flex-col space-y-10">
-            <router-link 
-                class="flex flex-col items-center bg-lightStone p-8 shadow-md rounded-md cursor-pointer"
-                :to="{ name: 'View-Hike', params: { hikeId: hike.id }  }"
-                v-for="(hike, index) in data"
-                :key="index"
-            >
-            <!-- Mountain Image -->
-            <img 
-                src="@/assets/images/mountain-icon.png" 
-                alt="mountain-icon"
-                class="h-24 w-auto"
-            />
+        <!-- Data Cards -->
+        <div v-else class="flex flex-col space-y-20 items-center">
 
-            <p 
-                class="mt-6 py-1 px-3 text-xs text-white bg-darkSky shadow-md rounded-lg"
-            >
-                {{ hike.mountainName }}
-            </p>
+            <!-- Logged Hikes Static Title -->
+            <div class="fixed max-w-screen-md top-20 items-center bg-lightStone w-full py-8 rounded-md border-b-4 border-darkSky">
+                <h1 class="mt-8 mb-2 text-center text-4xl text-darkSky">Logged Hikes:</h1>
+            </div>
+            
+            <div class="mt-24 overflow-y-auto">
+                <!-- Individual Hike Cards -->
+                <router-link 
+                    class="flex flex-col items-center bg-lightStone py-10 px-20 my-10 shadow-md rounded-md cursor-pointer border-b-4 border-darkSky"
+                    :to="{ name: 'View-Hike', params: { hikeId: hike.id } }"
+                    v-for="(hike, index) in data"
+                    :key="index"
+                >
+                    <!-- Mountain Image -->
+                    <img 
+                        src="@/assets/images/mountain-icon.png" 
+                        alt="mountain-icon"
+                        class="h-24 w-auto"
+                    />
 
-            <h1 class="mt-8 mb-2 text-center text-xl text-darkSky">
-                {{ hike.hikeDate }}
-            </h1>
+                    <p 
+                        class="mt-6 py-1 px-3 text-white bg-darkSky shadow-md rounded-lg"
+                    >
+                        {{ hike.mountainName }}
+                    </p>
 
-            </router-link>
+                    <h1 class="mt-8 mb-2 text-center text-xl text-darkSky">
+                        {{ hike.hikeDate }}
+                    </h1>
+
+                    <h1 class="mt-8 mb-2 text-center text-xl text-darkSky">
+                       Hike logged by: <span class="text-yellow-400">{{ hike.username }}</span>
+                    </h1>
+
+                </router-link>
+            </div>
         </div>
 
     </div>
@@ -44,7 +57,7 @@
 
 <script setup>
     // Imports
-    import { ref } from 'vue';
+    import { ref, computed } from 'vue';
     import { supabase } from '@/supabase/supabaseClient';
 
     // Create data
@@ -55,17 +68,18 @@
     const getData = async () => {
         // Try to contact supabase for hikes data
         try {
+            // Await hikes data
             const { data: hikes, error } = await supabase.from('hikes').select('*');
 
             // If an error is received from supabase, throw it:
-            if (error) throw error;
+            if (error) throw error;  
 
             // Assign the value of 'data' to the data response received
             data.value = hikes;
 
             // Update the value of 'dataLoaded' to true
             dataLoaded.value = true; 
-
+            
         }
 
         // If an error is received, warn the user
@@ -76,6 +90,10 @@
 
     // Run data function
     getData();
+
+
+    
+    
 
 </script>
 

@@ -23,8 +23,6 @@
     // Check to see if user is logged in:
     const user = supabase.auth.user;
 
-    console.log(user);
-
     // If user does not exist, need to make the app ready:
     if (!user) {
         appReady.value = true;

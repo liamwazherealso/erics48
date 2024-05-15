@@ -5,7 +5,7 @@
         <nav class="container py-5 px-4 flex flex-col gap-4 justify-between items-center sm:flex-row">
             <!-- Site name and image -->
             <div class="flex items-center gap-x-4">
-                <router-link class="hover:bg-reallyLightBrown cursor-pointer" :to="{ name: 'Home' }">
+                <router-link class="hover:bg-reallyLightBrown cursor-pointer rounded-full border-2 border-white hover:border-transparent" :to="{ name: 'Home' }">
                     <img src="../assets/images/hiker.png" alt="Hiker Image" class="w-14 hover:border-white">
                 </router-link>
                 <h1 class="text-2xl font-ProtestRiot">Eric's 48</h1>

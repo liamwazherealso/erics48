@@ -144,6 +144,7 @@ const hikeDuration = ref('00:00');
 const trailConditions = ref('select-condition');
 const hikeDifficulty = ref(null);
 const hikeReview = ref(null);
+const username = ref(null);
 
 const statusMsg = ref(null);
 const errorMsg = ref(null);
@@ -161,6 +162,11 @@ function getCurrentDate() {
 // Create hike function
 const createHike =  async () => {
     try {
+        // Retrieve username from user metadata
+        const { data: { user } } = await supabase.auth.getUser();
+            const metadata = user.user_metadata;
+            username.value = metadata.username;
+
         // Insert data into the 'hikes' table in Supabase
         const { error } = await supabase.from('hikes').insert([
             {
@@ -170,7 +176,8 @@ const createHike =  async () => {
                 hikeDuration: hikeDuration.value,
                 trailConditions: trailConditions.value,
                 hikeDifficulty: hikeDifficulty.value,
-                hikeReview: hikeReview.value
+                hikeReview: hikeReview.value,
+                username: username.value
             },
         ]);
 
@@ -188,6 +195,7 @@ const createHike =  async () => {
         trailConditions.value = 'select-condition';
         hikeDifficulty.value = null;
         hikeReview.value = null;
+        username.value = null;
 
         // Timeout
         setTimeout(() => {
@@ -204,23 +212,5 @@ const createHike =  async () => {
         }, 5000);
     }
 };
-
-// Reset fields function
-// const reset = () => {
-//     mountainName.value = 'select-mountain';
-//     trailName.value = null;
-//     hikeDate.value = new Date().toISOString().split('T')[0];
-//     hikeDuration.value = '00:00';
-//     trailConditions.value = 'select-condition';
-//     hikeDifficulty.value = null;
-//     hikeReview.value = null;
-
-//     statusMsg.value = 'Fields reset';
-
-//     setTimeout(() => {
-//         statusMsg.value = false;
-//     }, 5000);
-// };
-
 
 </script>

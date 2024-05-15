@@ -5,7 +5,7 @@ import './assets/style.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import { sessionTimeoutMixin } from './sessionTimeoutMixin';
+// import { sessionTimeoutMixin } from './sessionTimeoutMixin';
 
 // Create the app
 const app = createApp(App);

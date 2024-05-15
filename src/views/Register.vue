@@ -45,6 +45,18 @@
                 >
             </div>
 
+            <!-- Username input -->
+            <div class="flex flex-col mb-2">
+                <label for="username" class="mb-1 text-sm text-darkSky">Username</label>
+                <input 
+                    type="text" 
+                    required 
+                    class="p-2 focus:outline-none" 
+                    id="username" 
+                    v-model="username"
+                >
+            </div>
+
             <!-- Password Input -->
             <div class="flex flex-col mb-2">
                 <label for="password" class="mb-1 text-sm text-darkSky">Password</label>
@@ -93,6 +105,7 @@ import { useRouter } from 'vue-router';
 // Data and variables
 const router = useRouter();
 const email = ref(null);
+const username = ref(null);
 const password = ref(null);
 const confirmPassword = ref(null);
 const errorMsg = ref(null);
@@ -107,6 +120,11 @@ const register = async () => {
             const { error } = await supabase.auth.signUp({
                 email: email.value,
                 password: password.value,
+                options: {
+                    data: {
+                        username: username.value,
+                    },
+                },
             });
             // If supabase presents an error, throw it:
             if (error) throw error;
