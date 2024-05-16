@@ -44,9 +44,9 @@
                         {{ hike.hikeDate }}
                     </h1>
 
-                    <h1 class="mt-8 mb-2 text-center text-xl text-yellow-400">
+                    <h1 class="flex items-center gap-x-2 mt-8 mb-2 text-xl text-yellow-400">
                         <i class="fa-regular fa-user fa-lg" style="color: #FFD43B;"></i>
-                        Enrico
+                        {{ hike.username }}
                     </h1>
 
                 </router-link>
