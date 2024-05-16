@@ -44,8 +44,9 @@
                         {{ hike.hikeDate }}
                     </h1>
 
-                    <h1 class="mt-8 mb-2 text-center text-xl text-darkSky">
-                       Hike logged by: <span class="text-yellow-400">{{ hike.username }}</span>
+                    <h1 class="mt-8 mb-2 text-center text-xl text-yellow-400">
+                        <i class="fa-regular fa-user fa-lg" style="color: #FFD43B;"></i>
+                        Enrico
                     </h1>
 
                 </router-link>
@@ -57,7 +58,7 @@
 
 <script setup>
     // Imports
-    import { ref, computed } from 'vue';
+    import { ref } from 'vue';
     import { supabase } from '@/supabase/supabaseClient';
 
     // Create data
