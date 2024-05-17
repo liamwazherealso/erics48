@@ -14,7 +14,6 @@
     </div>
 
     <div v-if="dataLoaded">
-
       <!-- General Hike Info Card -->
       <div
         class="flex flex-col items-center p-8 rounded-md shadow-md 
@@ -347,8 +346,6 @@
       // Indicate to supabase that you want to update the hike that matches the current id
       try {
         // Destructure the response from supabase. Catch the error if one is present
-;
-
         const { error } = await supabase
           .from('hikes')
           .update({
@@ -375,7 +372,6 @@
           setTimeout(() => {
             statusMsg.value = null;
           }, 5000);
-
       }
 
       // Error catching
@@ -389,5 +385,4 @@
         }, 5000);
       }
     };
-
 </script>

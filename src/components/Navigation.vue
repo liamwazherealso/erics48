@@ -69,12 +69,20 @@
         }
         catch (error) {
             // Alert user of error
-            alert(error.message);
+            console.warn(error.message);
         }
     };
 
-    // Call getUsername
-    getUsername();
+    // When the user session changes, get the username
+    supabase.auth.onAuthStateChange((_, session) => {
+        if (user) {
+            getUsername();
+        }
+        else {
+            return;
+        }
+    });
+
 
     // Setup ref to router
     const router = useRouter();
@@ -88,8 +96,10 @@
         // Alert the user of a successful logout
         alert('You account has been logged out');
 
+        // Set the value of userName back to null
+        userName.value = null;
+
         // Push the user back to the home page
         router.push({ name: "Home" });
     };
-
 </script>

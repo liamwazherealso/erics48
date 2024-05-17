@@ -89,7 +89,7 @@
 
 <script setup>
 // Imports
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import { supabase } from '../supabase/supabaseClient';
 import { useRouter } from 'vue-router';
  
@@ -109,14 +109,17 @@ const login = async () => {
             email: email.value,
             password: password.value,
         });
+
         // If an error is detected, this condition will throw the user into the catch block
         if (error) throw error;
+
         // If no error received, push the user to the 'Home' view
         router.push({ name: "Home" });
     }
     catch (error) {
         // Interpolate error into error div 
         errorMsg.value = `Error: ${error.message}`;
+
         // Clear and remove the rendered error after 5 seconds
         setTimeout(() => {
             errorMsg.value = null;
@@ -135,7 +138,6 @@ const recover = async () => {
         const { data, error } = await supabase.auth.resetPasswordForEmail(recoveryEmail.value, {
             redirectTo: 'https://erics48.vercel.app/reset',
         });
-        console.log(recoveryEmail.value);
         // If an error is detected, this condition will throw the user into the catch block
         if (error) throw error;
         // Alert user of success
