@@ -5,10 +5,10 @@
       v-if="statusMsg || errorMsg"
       class="mb-10 p-4 rounded-md shadow-md bg-lightStone"
     >
-      <p class="text-darkSky">
+      <p class="text-successGreen">
         {{ statusMsg }}
       </p>
-      <p class="text-red-500">
+      <p class="text-errorRed">
         {{ errorMsg }}
       </p>
     </div>

@@ -3,10 +3,10 @@
     <div class="max-w-screen-md mx-auto px4 py-10">
         <!-- Status Message -->
         <div v-if="statusMsg || errorMsg" class="mb-10 p-4 bg-lightStone rounded-mb shadow-lg">
-            <p class="text-darkSky">
+            <p class="text-successGreen">
                 {{ statusMsg }}
             </p>
-            <p class="text-red-500">{{ errorMsg }}</p>
+            <p class="text-errorRed">{{ errorMsg }}</p>
         </div>
 
         <!-- Log Form Container -->

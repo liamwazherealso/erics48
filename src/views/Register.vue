@@ -25,7 +25,7 @@
         <!-- Error Handling -->
         <!-- Error div will be conditionally rendered -->
         <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-stone-100 shadow-lg">
-            <p class="text-red-500">
+            <p class="text-errorRed">
                 {{ errorMsg }}
             </p>
         </div>

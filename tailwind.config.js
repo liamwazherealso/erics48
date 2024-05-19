@@ -14,6 +14,8 @@ export default {
         lightSky: '#bae6fd',
         darkSky: '#38bdf8',
         lightStone: '#f5f5f4',
+        successGreen: '#16a34a',
+        errorRed: '#ef4444',
       },
     },
     fontFamily: {

@@ -3,7 +3,7 @@
         <!-- Error Handling -->
         <!-- Error div will be conditionally rendered -->
         <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-lightStone shadow-lg">
-            <p class="text-red-500">
+            <p class="text-errorRed">
                 {{ errorMsg }}
             </p>
         </div>
@@ -89,7 +89,7 @@
 
 <script setup>
 // Imports
-import { ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 import { supabase } from '../supabase/supabaseClient';
 import { useRouter } from 'vue-router';
  
