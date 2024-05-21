@@ -27,7 +27,7 @@
         bg-darkSky shadow-lg"
             @click="editMode"
           >
-            <img class="h-3.5 w-auto" src="@/assets/images/pencil-icon.png" alt="pencil" />
+            <i class="fa-solid fa-pencil fa-sm" style="color: #ffffff;"></i>
           </div>
 
           <!-- Delete hike button  -->
@@ -36,7 +36,7 @@
             class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer
             bg-darkSky shadow-lg"
           >
-            <img class="h-3.5 w-auto" src="@/assets/images/trash-can-icon.png" alt="trash_can" />
+            <i class="fa-solid fa-trash-can fa-sm" style="color: #ffffff;"></i>
           </div>
         </div>
 
@@ -222,19 +222,20 @@
               alt="trash-can"
             />
 
+        <!-- Update button -->
+        <button
+          v-if="edit"
+          @click="update"
+          type="button"
+          class="mt-10 py-2 px-6 rounded-sm self-start text-sm        text-white
+          bg-darkSky duration-200 border-solid border-2 border-transparent
+          hover:border-darkSky hover:bg-white hover:text-darkSky"
+        >
+          Update Hike
+        </button>
+
       </div>
 
-      <!-- Update -->
-      <button
-        v-if="edit"
-        @click="update"
-        type="button"
-        class="mt-10 py-2 px-6 rounded-sm self-start text-sm        text-white
-        bg-darkSky duration-200 border-solid border-2 border-transparent
-        hover:border-darkSky hover:bg-white hover:text-darkSky"
-      >
-        Update Hike
-      </button>
     </div>
   </div>
 </template>
