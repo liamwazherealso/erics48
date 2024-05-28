@@ -113,6 +113,8 @@ const login = async () => {
         // If an error is detected, this condition will throw the user into the catch block
         if (error) throw error;
 
+        console.log('User is logged in')
+
         // If no error received, push the user to the 'Home' view
         router.push({ name: "Home" });
     }

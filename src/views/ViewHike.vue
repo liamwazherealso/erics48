@@ -19,10 +19,11 @@
         class="flex flex-col items-center p-8 rounded-md shadow-md 
       bg-lightStone relative"
       >
-        <!-- We're only rendering the following icon if the user is logged in -->
+        <!-- We're only rendering the following icon if the user is logged in and uuid matchest uuid for hike-->
         <div v-if="user" class="flex absolute left-2 top-2 gap-x-2">
           <!-- Edit Hike Button -->
           <div
+            v-if="match"
             class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer
         bg-darkSky shadow-lg"
             @click="editMode"
@@ -32,6 +33,7 @@
 
           <!-- Delete hike button  -->
           <div
+            v-if="match"
             @click="deleteHike"
             class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer
             bg-darkSky shadow-lg"
@@ -257,10 +259,14 @@
     const statusMsg = ref(null);
     const route = useRoute();
     const router = useRouter();
-    const user = computed(() => store.state.user);
+    const uuid = ref(null);
+    const match = ref(false);
 
     // Get current id of route
     const currentId = route.params.hikeId; // This param was defined in our router
+
+    // Check to see if user is logged in
+    const user = store.state.user;
 
     // Get hike data
     const getData = async () => {
@@ -271,12 +277,23 @@
                 .select('*')
                 .eq('id', currentId);
 
+            if (user) {
+              // Retrieve username from user metadata
+              const { data: { user } } = await supabase.auth.getUser();
+              const metadata = user.user_metadata;
+              uuid.value = metadata.sub;
+            }
+            
+
             // If an error is received from supabase, throw it:
             if (error) throw error;
 
             // Assign the value of 'data' to the data response received
             data.value = hikes[0]; // This valued is returned from the database as an array
 
+            if (data.value.uuid == uuid.value) {
+              match.value = true;
+            }
 
             // Update the value of 'dataLoaded' to true
             dataLoaded.value = true; 
@@ -339,7 +356,7 @@
 
     const editMode = () => {
         // This will alow the user to toggle edit mode
-        edit.value = !edit.value;
+          edit.value = !edit.value;
     };
     
     // Update hike
@@ -376,7 +393,7 @@
       }
 
       // Error catching
-      catch {
+      catch (error) {
         // Post the error message from supabase
         errorMsg.value = `Error: ${error.message}`;
 

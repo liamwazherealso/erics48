@@ -29,7 +29,6 @@
     }
     // If user is logged in, this will fire:
     supabase.auth.onAuthStateChange((_, session) => {
-        console.log('User is logged in');
         // This will help the app to tailor the content to the specific, supabase confirmed user
         store.methods.setUser(session);
         appReady.value = true;

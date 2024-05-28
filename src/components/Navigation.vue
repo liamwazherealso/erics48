@@ -55,16 +55,16 @@
     // Get username function
     const getUsername = async () => {
         try {
-            // If user is logged in
-            if (user) {
+            // Check to see if user is logged in
+            if (user.value) {
                 // Access the user object metdata from supabase to gain username
                 const { data: { user, error } } = await supabase.auth.getUser();
+                // If Supabase returns an error, throw to the catch block
+                if (error) throw error; 
+
                 const metadata = user.user_metadata;
                 // Assign value of username to userName
                 userName.value = metadata.username;
-    
-                // If Supabase returns an error, throw to the catch block
-                if (error) throw error; 
             }
         }
         catch (error) {
@@ -75,12 +75,7 @@
 
     // When the user session changes, get the username
     supabase.auth.onAuthStateChange((_, session) => {
-        if (user) {
-            getUsername();
-        }
-        else {
-            return;
-        }
+        getUsername();
     });
 
 

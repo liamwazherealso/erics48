@@ -137,7 +137,6 @@ import Autocomplete from '@/components/Autocomplete.vue';
 
 // Create data
 const mountainName = ref(null);
-
 const trailName = ref(null);
 const hikeDate = ref(getCurrentDate());
 const hikeDuration = ref('00:00');
@@ -145,7 +144,9 @@ const trailConditions = ref('select-condition');
 const hikeDifficulty = ref(null);
 const hikeReview = ref(null);
 const username = ref(null);
+const uuid = ref(null);
 
+// Status variables
 const statusMsg = ref(null);
 const errorMsg = ref(null);
 
@@ -166,6 +167,7 @@ const createHike =  async () => {
         const { data: { user } } = await supabase.auth.getUser();
             const metadata = user.user_metadata;
             username.value = metadata.username;
+            uuid.value = metadata.sub;
 
         // Insert data into the 'hikes' table in Supabase
         const { error } = await supabase.from('hikes').insert([
@@ -177,7 +179,8 @@ const createHike =  async () => {
                 trailConditions: trailConditions.value,
                 hikeDifficulty: hikeDifficulty.value,
                 hikeReview: hikeReview.value,
-                username: username.value
+                username: username.value,
+                uuid: uuid.value
             },
         ]);
 
