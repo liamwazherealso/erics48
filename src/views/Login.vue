@@ -20,19 +20,21 @@
                 <input 
                     type="text" 
                     required 
-                    class="p-2 focus:outline-none" id="email" 
+                    class="p-2 focus:outline-none"
+                    name="email"
+                    autocomplete="email"
+                    id="email"
                     v-model="email"
                 >
             </div>
-
             <!-- Password Input -->
             <div class="flex flex-col mb-2">
                 <label for="password" class="mb-1 text-sm text-darkSky">Password</label>
                 <input 
                     type="password" 
                     required 
-                    class="p-2 focus:outline-none" 
-                    id="password" 
+                    class="p-2 focus:outline-none"
+                    id="password"
                     v-model="password"
                 >
             </div>

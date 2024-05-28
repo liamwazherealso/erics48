@@ -29,7 +29,7 @@
                 >
                     <!-- Mountain Image -->
                     <img 
-                        src="@/assets/images/mountain-icon.png" 
+                        src="@/assets/images/icons/mountain-icon.png" 
                         alt="mountain-icon"
                         class="h-24 w-auto"
                     />

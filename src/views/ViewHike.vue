@@ -45,7 +45,7 @@
         <!-- Mountain image -->
         <img
           class="h-24 w-auto"
-          src="@/assets/images/mountain-icon.png"
+          src="@/assets/images/icons/mountain-icon.png"
           alt="mountain"
         />
 
@@ -214,15 +214,6 @@
               <p v-else>{{ data.hikeReview }}</p>
 
             </div>
-
-            <!-- Delete hike button -->
-            <img
-              v-if="edit"
-              @click="deleteHike(item.id)"
-              class="absolute h-4 w-auto -left-5 cursor-pointer"
-              src="@/assets/images/trash-can-icon.png"
-              alt="trash-can"
-            />
 
         <!-- Update button -->
         <button

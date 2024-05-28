@@ -7,7 +7,7 @@
             <div class="flex items-center gap-x-4">
                 <!-- Router link to Home page -->
                 <router-link class="hover:bg-reallyLightBrown cursor-pointer rounded-full border-2 border-white hover:border-transparent" :to="{ name: 'Home' }">
-                    <img src="../assets/images/hiker.png" alt="Hiker Image" class="w-14 hover:border-white">
+                    <img src="../assets/images/icons/hiker.png" alt="Hiker Image" class="w-14 hover:border-white">
                 </router-link>
                 <h1 class="text-2xl font-ProtestRiot">Eric's 48</h1>
             </div>

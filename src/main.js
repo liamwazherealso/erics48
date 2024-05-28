@@ -13,8 +13,6 @@ const app = createApp(App);
 // Utilize the router
 app.use(router);
 
-// Include session timeout mixin globally
-// app.mixin(sessionTimeoutMixin);
 
 // Mount the app
 app.mount('#app');
