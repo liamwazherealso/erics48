@@ -75,7 +75,7 @@ const router = createRouter({
       },
     },
     {
-      // Page on accessible via emailed link
+      // Page accessible via emailed link
       path: "/reset",
       name: "Reset",
       component: Reset,

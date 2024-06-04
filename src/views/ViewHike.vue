@@ -151,7 +151,7 @@
                     required
                     v-model="data.trailConditions"
                 >
-                    <option value="select-condition">select-condition</option>
+                    <option value="" disabled selected>select-condition</option>
                     <option value="snow">Snow Covered Trail</option>
                     <option value="ice">Ice Covered Trail</option>
                     <option value="mud">Mud Covered Trail</option>
@@ -176,16 +176,17 @@
                 <select
                     v-if="edit"
                     name="hike-difficulty"
-                    class="p-2 w-full focus:outline-none" 
+                    class="p-2 w-full focus:outline-none text-2xl" 
                     id="hike-difficulty"
                     required
                     v-model="data.hikeDifficulty"
                 >
-                    <option value="great">🤗</option>
-                    <option value="good">😃</option>
-                    <option value="okay">😐</option>
-                    <option value="bad">😖</option>
-                    <option value="awful">🤬</option>
+                    <option value="" disabled selected>select-difficulty</option>
+                    <option value="🤗">🤗</option>
+                    <option value="😃">😃</option>
+                    <option value="😐">😐</option>
+                    <option value="😖">😖</option>
+                    <option value="🤬">🤬</option>
                 </select>
 
                 <!-- Hike difficulty data if edit mode not toggled -->

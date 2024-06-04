@@ -16,7 +16,7 @@
 
                 <h1 class="text-2xl text-darkSky">Log Hike</h1>
 
-                <!-- Mountain Name Input for Searching-->
+                <!-- Mountain Name Input for Searching -->
                 <div>
                     <label for="mountain-name" class="mb-1 text-sm text-darkSky">Mountain Name</label>
 
@@ -73,7 +73,7 @@
                         required
                         v-model="trailConditions"
                     >
-                        <option value="select-condition">select-condition</option>
+                        <option value="" disabled selected>select-condition</option>
                         <option value="snow">Snow Covered Trail</option>
                         <option value="ice">Ice Covered Trail</option>
                         <option value="mud">Mud Covered Trail</option>
@@ -89,16 +89,17 @@
                     <label for="hike-difficulty" class="text-sm mb-1 text-darkSky">Hike Difficulty</label>
                     <select
                         name="hike-difficulty"
-                        class="p-2 focus:outline-none text-xl" 
+                        class="p-2 focus:outline-none text-2xl" 
                         id="hike-difficulty"
                         required
                         v-model="hikeDifficulty"
                     >
-                        <option value="great">🤗</option>
-                        <option value="good">😃</option>
-                        <option value="okay">😐</option>
-                        <option value="bad">😖</option>
-                        <option value="awful">🤬</option>
+                        <option value="" disabled selected>select-difficulty</option>
+                        <option value="🤗">🤗</option>
+                        <option value="😃">😃</option>
+                        <option value="😐">😐</option>
+                        <option value="😖">😖</option>
+                        <option value="🤬">🤬</option>
                     </select>
                 </div>
 
