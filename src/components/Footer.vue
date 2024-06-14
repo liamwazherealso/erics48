@@ -11,29 +11,5 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
 
-const footerRef = ref(null);
-const showFooter = ref(false);
-
-// Function to check if the footer is in the viewport
-const checkFooterVisibility = () => {
-  if (footerRef.value) {
-    const footerTop = footerRef.value.getBoundingClientRect().top;
-    const windowHeight = window.innerHeight;
-
-    // If the top of the footer is within the viewport, show it
-    showFooter.value = footerTop < windowHeight;
-  }
-};
-
-// Add scroll event listener to check footer visibility
-onMounted(() => {
-  window.addEventListener('scroll', checkFooterVisibility);
-});
-
-// Remove scroll event listener on component unmount
-onUnmounted(() => {
-  window.removeEventListener('scroll', checkFooterVisibility);
-});
 </script>

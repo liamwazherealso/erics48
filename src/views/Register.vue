@@ -21,17 +21,9 @@
     </section>
 
     <!-- Account Registration Section -->
-    <section id="registerSection" class="max-w-screen-sm mx-auto px-4 py-32">
-        <!-- Error Handling -->
-        <!-- Error div will be conditionally rendered -->
-        <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-stone-100 shadow-lg">
-            <p class="text-errorRed">
-                {{ errorMsg }}
-            </p>
-        </div>
-
+    <section id="registerSection" class="max-w-screen-md mx-auto px-4 py-20">
         <!-- Register Form -->
-        <form @submit.prevent="register" class="p-8 flex flex-col bg-lightStone rounded-md shadow-lg">
+        <form @submit.prevent="register" class="p-8 flex flex-col w-96 bg-lightStone rounded-md shadow-lg">
             <h1 class="text-3xl text-darkSky mb-4">Register</h1>
             <!-- Email input -->
             <div class="flex flex-col mb-2">
@@ -101,6 +93,7 @@
 import { ref } from 'vue';
 import { supabase } from '../supabase/supabaseClient.js';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 
 // Data and variables
 const router = useRouter();
@@ -108,7 +101,7 @@ const email = ref(null);
 const username = ref(null);
 const password = ref(null);
 const confirmPassword = ref(null);
-const errorMsg = ref(null);
+const toast = useToast();
 
 
 // Register function
@@ -130,28 +123,20 @@ const register = async () => {
             if (error) throw error;
 
             // Alert user to check their email to confirm
-            alert('Check your email to confirm your account');
+            toast.info('Check your email to confirm your account');
 
             // If everything checks out, push the user to the Login page
             router.push({ name: "Login" });
         }
         catch (error) {
-            // Assign the value of the supabase error to 'errorMsg' so it can be rendered
-            errorMsg.value = error.message;
-            setTimeout(() => {
-                // Set the error message back to null
-                errorMsg.value = null;
-            }, 5000);
+            // Alert the user of the Supabase error
+            toast.error(`Error: ${error.message}`);
         }
         return;
     }
     // If the passwords do not match:
     else {
-        errorMsg.value = "Error: passwords do not match";
-        setTimeout(() => {
-            // Set the error message back to null
-            errorMsg.value = null;
-        }, 5000);
+        toast.warning('Passwords do not match');
     }
 };
 
@@ -167,7 +152,5 @@ const register = async () => {
         padding-bottom: 350px;
         padding-left: 500px;
         padding-right: 500px;
-        
-
     }
 </style>

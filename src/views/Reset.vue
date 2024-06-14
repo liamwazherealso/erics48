@@ -1,18 +1,9 @@
 <template>
   <!-- Password Reset Section -->
   <section id="resetSection" class="max-w-screen-sm mx-auto px-4 py-20">
-        <!-- Error Handling -->
-        <!-- Error div will be conditionally rendered -->
-        <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-stone-100 shadow-lg">
-            <p class="text-errorRed">
-                {{ errorMsg }}
-            </p>
-        </div>
-
         <!-- Reset Form -->
         <form @submit.prevent="reset" class="p-8 flex flex-col bg-lightStone rounded-md shadow-lg">
             <h1 class="text-3xl text-darkSky mb-4">Reset account password</h1>
-
             <!-- Password Input -->
             <div class="flex flex-col mb-2">
                 <label for="password" class="mb-1 text-sm text-darkSky">New password</label>
@@ -58,12 +49,14 @@
     import { ref } from 'vue';
     import { supabase } from '../supabase/supabaseClient.js';
     import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
 
     // Data and variables
     const newPassword = ref(null);
     const confirmPassword = ref(null);
     const errorMsg = ref(null);
     const router = useRouter();
+    const toast = useToast();
 
     // Reset password function
     const reset = async () => {
@@ -76,7 +69,7 @@
                 });
 
                 // Alert the user that their password has been changed successfully
-                alert('Your password has been successfully changed');
+                toast.success('Your password has successfully been changed');
 
                 // Inform supabase that the user has logged out
                 await supabase.auth.signOut();
@@ -88,26 +81,14 @@
                 if (error) throw error;
             }
             catch (error) {
-                // Assign the value of the supabase error to 'errorMsg' so it can be rendered
-                errorMsg.value = error.message;
-                    setTimeout(() => {
-                        // Set the error message back to null
-                        errorMsg.value = null;
-                    }, 5000);
-                }
-                return;
+                // Alert the user of the Supabase error
+                toast.error(`Error: ${error.message}`);
+            }
+            return;
         }
         // If the new and confirmed passwords do not match
         else {
-            errorMsg.value = "Error: passwords do not match";
-            setTimeout(() => {
-                // Set the error message back to null
-                errorMsg.value = null;
-            }, 5000);
+            toast.warning('Error: passwords do not match');
         }
     };
 </script>
-
-<style>
-
-</style>

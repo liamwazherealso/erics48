@@ -1,10 +1,10 @@
 <template>
-    <div  v-if="appReady" class="min-h-full font-Poppins box-border">
-        <Navigation class="mb-24"/>
-        <body class="mt-20">
+    <div  v-if="appReady" class="font-Poppins box-border"> 
+        <body class="bg-lightSky min-h-full mt-20 flex flex-col">
+            <Navigation class="mb-24"/>
             <router-view />
+            <Footer class="mt-auto" />
         </body>
-        <Footer />
     </div>
 </template>
 
@@ -40,11 +40,7 @@
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
     @import url("https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap");
 
-    body {
-        background-color: #bae6fd;
-    }
-
-    Footer {
-        margin-top: 1000px;
+    html {
+        height: 100%;
     }
 </style>

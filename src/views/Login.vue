@@ -1,17 +1,9 @@
 <template>
-    <div class="max-w-screen-sm mx-auto px-4 py-20">
-        <!-- Error Handling -->
-        <!-- Error div will be conditionally rendered -->
-        <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-lightStone shadow-lg">
-            <p class="text-errorRed">
-                {{ errorMsg }}
-            </p>
-        </div>
-
+    <div class="max-w-screen-sm mx-auto mb-36 px-4 py-20">
         <!-- Login Form -->
         <form 
             @submit.prevent="login" 
-            class="mb-2 p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
+            class="mb-2 p-8 flex flex-col bg-stone-100 w-96 rounded-md shadow-lg"
         >
             <h1 class="text-3xl text-darkSky mb-4">Login</h1>
             <!-- Email input -->
@@ -57,36 +49,34 @@
                 Having trouble signing in? <span class="text-darkSky hover:text-lightSky">Click here</span>
             </p>
         </form>
-        
-
     </div>
 
     <!-- Password Recovery  -->
-        <div v-if="passDiv" class="max-w-screen-sm mx-auto px-4 py-10">
+    <div v-if="passDiv" class="max-w-screen-sm mx-auto px-4 py-10">
 
-            <!-- Password recovery form -->
-            <form 
-                @submit.prevent="recover"
-                class="mb-84 p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
-            >
+        <!-- Password recovery form -->
+        <form 
+            @submit.prevent="recover"
+            class="mb-84 p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
+        >
 
-            <h1 class="text-2xl text-darkSky mb-4">Password Recovery</h1>
+        <h1 class="text-2xl text-darkSky mb-4">Password Recovery</h1>
 
-            <!-- Recovery email input -->
-            <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
-            <input 
-                    type="text" 
-                    required 
-                    class="p-2 focus:outline-none" id="email" 
-                    v-model="recoveryEmail"
-            >
+        <!-- Recovery email input -->
+        <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
+        <input 
+                type="text" 
+                required 
+                class="p-2 focus:outline-none" id="email" 
+                v-model="recoveryEmail"
+        >
 
-            <!-- Submit email button -->
-            <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
-                Send Recovery Email
-            </button>
-            </form>
-        </div>
+        <!-- Submit email button -->
+        <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
+            Send Recovery Email
+        </button>
+        </form>
+    </div>
 </template>
 
 <script setup>
@@ -94,14 +84,15 @@
 import { ref } from 'vue';
 import { supabase } from '../supabase/supabaseClient';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
  
 // Data and variables
 const router = useRouter();
 const email = ref(null);
 const password = ref(null);
-const errorMsg = ref(null);
 const passDiv = ref(false);
 const recoveryEmail = ref(null);
+const toast = useToast();
 
 // Login function
 const login = async () => {
@@ -115,19 +106,17 @@ const login = async () => {
         // If an error is detected, this condition will throw the user into the catch block
         if (error) throw error;
 
-        console.log('User is logged in')
+        console.log('User is logged in');
+
+        // Alert user to succesful login
+        toast.info('You have successfully logged in');
 
         // If no error received, push the user to the 'Home' view
-        router.push({ name: "Home" });
+        router.push({ name: "Home" });        
     }
     catch (error) {
-        // Interpolate error into error div 
-        errorMsg.value = `Error: ${error.message}`;
-
-        // Clear and remove the rendered error after 5 seconds
-        setTimeout(() => {
-            errorMsg.value = null;
-        }, 5000);
+        // Interpolate error into Vue toast
+        toast.error(`Error: ${error.message}`);
     }
 };
 
@@ -145,15 +134,15 @@ const recover = async () => {
         // If an error is detected, this condition will throw the user into the catch block
         if (error) throw error;
         // Alert user of success
-        alert('Check your email for the password recovery link');
+        toast.info('Check your email for the password recovery link');
     }
     catch (error) {
-        // Interpolate error into error div 
-        errorMsg.value = `Error: ${error.message}`;
-        // Clear and remove the rendered error after 5 seconds
-        setTimeout(() => {
-            errorMsg.value = null;
-        }, 5000);
+        // Alert user of Supabase error
+        toast.error(`Error: ${error,message}`);
     }
 };
 </script>
+
+<style scoped>
+
+</style>  

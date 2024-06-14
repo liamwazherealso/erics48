@@ -1,6 +1,6 @@
 <template>
     <!-- About section -->
-    <section class="max-w-screen-md mx-auto px-4 py-12">
+    <section class="max-w-screen-md mx-auto px-4 py-20">
         <div class="p-8 flex flex-col items-center bg-lightStone rounded-md shadow-lg">
             <h1 class="text-4xl text-darkSky mb-8">About Me</h1>
             <div class="flex-grow">
@@ -16,11 +16,3 @@
         </div>
     </section>
 </template>
-
-<script setup>
-
-</script>
-
-<style scoped>
-
-</style>

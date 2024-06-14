@@ -1,16 +1,7 @@
 <template>
-    <!-- Status & Error Container -->
     <div class="max-w-screen-md mx-auto px4 py-10">
-        <!-- Status Message -->
-        <div v-if="statusMsg || errorMsg" class="mb-10 p-4 bg-lightStone rounded-mb shadow-lg">
-            <p class="text-successGreen">
-                {{ statusMsg }}
-            </p>
-            <p class="text-errorRed">{{ errorMsg }}</p>
-        </div>
-
         <!-- Log Form Container -->
-        <div class="p-8 flex items-start bg-lightStone rounded-mb shadow-lg">
+        <div class="w-96 p-8 flex items-start bg-lightStone rounded-mb shadow-lg">
             <!-- Log Form -->
             <form @submit.prevent="createHike" class="flex flex-col gap-y-5 w-full">
 
@@ -133,6 +124,7 @@
 // Imports
 import { ref } from 'vue';
 import { supabase } from '@/supabase/supabaseClient';
+import { useToast } from 'vue-toastification';
 import peaks from '@/peaks.json';
 import Autocomplete from '@/components/Autocomplete.vue';
 
@@ -146,6 +138,7 @@ const hikeDifficulty = ref(null);
 const hikeReview = ref(null);
 const username = ref(null);
 const uuid = ref(null);
+const toast = useToast();
 
 // Status variables
 const statusMsg = ref(null);
@@ -189,7 +182,7 @@ const createHike =  async () => {
         if (error) throw error;
 
         // Alert user of success
-        statusMsg.value = 'Success: Hike logged!';
+        toast.success('Hike logged!');
 
         // Reset all variables that sent data to Supabase
         mountainName.value = 'select-mountain';
@@ -201,19 +194,10 @@ const createHike =  async () => {
         hikeReview.value = null;
         username.value = null;
 
-        // Timeout
-        setTimeout(() => {
-            statusMsg.value = null;
-        }, 5000);
     }
     catch (error) {
         // Render error message
-        errorMsg.value = `Error: ${error.message}`;
-
-        // Timeout
-        setTimeout(() => {
-            errorMsg.value = null;
-        }, 5000);
+        toast.error(`Error: ${error.message}`);
     }
 };
 

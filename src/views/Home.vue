@@ -60,10 +60,12 @@
     // Imports
     import { ref } from 'vue';
     import { supabase } from '@/supabase/supabaseClient';
+    import { useToast } from 'vue-toastification';
 
     // Create data
     const data = ref([]);
     const dataLoaded = ref(null);
+    const toast = useToast();
 
     // Get data
     const getData = async () => {
@@ -85,7 +87,7 @@
 
         // If an error is received, warn the user
         catch (error) {
-            console.warn(error.message);
+            toast.error(`Error: ${error.message}`);
         }
     };
 

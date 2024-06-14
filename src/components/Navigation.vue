@@ -7,6 +7,7 @@
             <div class="flex items-center gap-x-4">
                 <!-- Router link to Home page -->
                 <router-link class="hover:bg-reallyLightBrown cursor-pointer rounded-full border-2 border-white hover:border-transparent" :to="{ name: 'Home' }">
+                    <!-- Router link hiker image -->
                     <img src="../assets/images/icons/hiker.png" alt="Hiker Image" class="w-14 hover:border-white">
                 </router-link>
                 <h1 class="text-2xl font-ProtestRiot">Eric's 48</h1>
@@ -45,9 +46,11 @@
     import { supabase } from "@/supabase/supabaseClient";
     import { useRouter } from 'vue-router';
     import store from '../store/index';
+    import { useToast } from 'vue-toastification';
 
     // Variables
     const userName = ref(null);
+    const toast = useToast();
 
     // Get user from store
     const user = computed(() => store.state.user);
@@ -86,10 +89,11 @@
     const logout = async () => {
         // Inform supabase that the user has logged out
         await supabase.auth.signOut();
+        
         console.log('User is logged out');
 
         // Alert the user of a successful logout
-        alert('You account has been logged out');
+        toast.info('Your account has been logged out');
 
         // Set the value of userName back to null
         userName.value = null;
