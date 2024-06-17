@@ -1,9 +1,9 @@
 <template>
-    <div class="max-w-screen-sm mx-auto mb-36 px-4 py-20">
+    <section v-if=!passDiv class="max-w-screen-lg mx-auto px-4 py-20 mb-36 md:w-1/2 lg:w-1/3">
         <!-- Login Form -->
         <form 
             @submit.prevent="login" 
-            class="mb-2 p-8 flex flex-col bg-stone-100 w-96 rounded-md shadow-lg"
+            class="mb-2 p-8 flex w-full flex-col bg-stone-100 rounded-md shadow-lg"
         >
             <h1 class="text-3xl text-darkSky mb-4">Login</h1>
             <!-- Email input -->
@@ -49,34 +49,38 @@
                 Having trouble signing in? <span class="text-darkSky hover:text-lightSky">Click here</span>
             </p>
         </form>
-    </div>
+    </section>
 
     <!-- Password Recovery  -->
-    <div v-if="passDiv" class="max-w-screen-sm mx-auto px-4 py-10">
+    <section v-if="passDiv" class="max-w-screen-md mx-auto w-96 mb-56 px-4 py-20 md:w-1/2 lg:w-1/3">
 
         <!-- Password recovery form -->
         <form 
             @submit.prevent="recover"
-            class="mb-84 p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
+            class="p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
         >
 
-        <h1 class="text-2xl text-darkSky mb-4">Password Recovery</h1>
+            <h1 class="text-3xl text-darkSky mb-4">Password Recovery</h1>
 
-        <!-- Recovery email input -->
-        <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
-        <input 
-                type="text" 
-                required 
-                class="p-2 focus:outline-none" id="email" 
-                v-model="recoveryEmail"
-        >
+            <!-- Recovery email input -->
+            <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
+            <input 
+                    type="text" 
+                    required 
+                    class="p-2 focus:outline-none" id="email" 
+                    v-model="recoveryEmail"
+            >
 
-        <!-- Submit email button -->
-        <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
-            Send Recovery Email
-        </button>
+            <!-- Submit email button -->
+            <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
+                Send Recovery Email
+            </button>
+            <!-- Text to return to Login form -->
+            <p @click="closePassDiv" class="text-sm mt-6 text-center hover:cursor-pointer">
+                Return to Login <span class="text-darkSky hover:text-lightSky">Click here</span>
+            </p>
         </form>
-    </div>
+    </section>
 </template>
 
 <script setup>
@@ -123,6 +127,11 @@ const login = async () => {
 // Open password recovery function
 const openPassDiv = () => {
     passDiv.value = true;
+};
+
+// Close password recovery function
+const closePassDiv = () => {
+    passDiv.value = false;
 };
 
 // Send password recovery email function

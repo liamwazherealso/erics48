@@ -1,6 +1,6 @@
 <template>
   <!-- Password Reset Section -->
-  <section id="resetSection" class="max-w-screen-sm mx-auto px-4 py-20">
+  <section id="resetSection" class="max-w-screen-lg md:w-1/2 lg:w-1/3 mx-auto px-4 py-20">
         <!-- Reset Form -->
         <form @submit.prevent="reset" class="p-8 flex flex-col bg-lightStone rounded-md shadow-lg">
             <h1 class="text-3xl text-darkSky mb-4">Reset account password</h1>

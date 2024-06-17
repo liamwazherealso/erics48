@@ -1,7 +1,7 @@
 <template>
-    <div class="max-w-screen-md mx-auto px4 py-10">
+    <div class="max-w-screen-lg md:w-1/2 lg:w-1/3 mx-auto px-4 py-20">
         <!-- Log Form Container -->
-        <div class="w-96 p-8 flex items-start bg-lightStone rounded-mb shadow-lg">
+        <div class="w-full p-8 flex items-start bg-lightStone rounded-mb shadow-lg">
             <!-- Log Form -->
             <form @submit.prevent="createHike" class="flex flex-col gap-y-5 w-full">
 

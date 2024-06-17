@@ -1,5 +1,5 @@
 <template>
-    <div v-if="dataLoaded" id="home" class="container mx-auto px-4 py-20 max-w-screen-sm">
+    <div v-if="dataLoaded" id="home" class="container mx-auto px-4 py-20 max-w-screen-lg md:w-1/2 lg:w-1/3">
         <!-- No data div -->
         <div v-if="data.length === 0" class="w-full flex flex-col items-center">
             <h1 class="text-2xl">Looks empty here...</h1>
@@ -15,11 +15,11 @@
         <div v-else class="flex flex-col space-y-20 items-center">
 
             <!-- Logged Hikes Static Title -->
-            <div class="fixed max-w-screen-md top-20 items-center bg-lightStone w-full py-8 rounded-md border-b-4 border-darkSky">
+            <div class="fixed top-20 items-center bg-lightStone w-full md:w-1/2 py-8 rounded-md border-b-4 border-darkSky">
                 <h1 class="mt-8 mb-2 text-center text-4xl text-darkSky">Logged Hikes:</h1>
             </div>
             
-            <div class="mt-24 overflow-y-auto">
+            <div class="mt-24 w-full overflow-y-auto">
                 <!-- Individual Hike Cards -->
                 <router-link 
                     class="flex flex-col items-center bg-lightStone py-10 px-20 my-10 shadow-md rounded-md cursor-pointer border-b-4 border-darkSky"

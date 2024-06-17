@@ -21,9 +21,9 @@
     </section>
 
     <!-- Account Registration Section -->
-    <section id="registerSection" class="max-w-screen-md mx-auto px-4 py-20">
+    <section id="registerSection" class="max-w-screen-lg mx-auto px-4 py-20 md:w-1/2 lg:w-1/3">
         <!-- Register Form -->
-        <form @submit.prevent="register" class="p-8 flex flex-col w-96 bg-lightStone rounded-md shadow-lg">
+        <form @submit.prevent="register" class="p-8 flex flex-col w-full bg-lightStone rounded-md shadow-lg">
             <h1 class="text-3xl text-darkSky mb-4">Register</h1>
             <!-- Email input -->
             <div class="flex flex-col mb-2">

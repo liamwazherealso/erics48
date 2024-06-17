@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-screen-sm mx-auto px-4 py-20 mb-4">
+    <div class="max-w-screen-lg md:w-1/2 lg:w-1/3 mx-auto px-4 py-20 mb-4">
       <div v-if="dataLoaded">
         <!-- General Hike Info Card -->
         <div
