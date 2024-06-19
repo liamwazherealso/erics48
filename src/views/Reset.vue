@@ -54,7 +54,6 @@
     // Data and variables
     const newPassword = ref(null);
     const confirmPassword = ref(null);
-    const errorMsg = ref(null);
     const router = useRouter();
     const toast = useToast();
 

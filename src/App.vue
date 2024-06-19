@@ -1,6 +1,6 @@
 <template>
     <div  v-if="appReady" class="font-Poppins box-border"> 
-        <body class="bg-lightSky min-h-full mt-20 flex flex-col">
+        <body class="bg-lightSky min-h-screen mt-20 flex flex-col">
             <Navigation class="mb-24"/>
             <router-view />
             <Footer class="mt-auto" />

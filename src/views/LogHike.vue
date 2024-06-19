@@ -11,7 +11,7 @@
                 <div>
                     <label for="mountain-name" class="mb-1 text-sm text-darkSky">Mountain Name</label>
 
-                    <Autocomplete :source="peaks" v-model="mountainName" />
+                    <Autocomplete :source="peaks" v-model="mountainName" /> 
                 </div>
 
                 <!-- Trail Name Input -->
@@ -139,11 +139,6 @@ const hikeReview = ref(null);
 const username = ref(null);
 const uuid = ref(null);
 const toast = useToast();
-
-// Status variables
-const statusMsg = ref(null);
-const errorMsg = ref(null);
-
 
 // getCurrentDate function
 function getCurrentDate() {

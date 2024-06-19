@@ -1,86 +1,86 @@
 <template>
-    <section v-if=!passDiv class="max-w-screen-lg mx-auto px-4 py-20 mb-36 md:w-1/2 lg:w-1/3">
-        <!-- Login Form -->
-        <form 
-            @submit.prevent="login" 
-            class="mb-2 p-8 flex w-full flex-col bg-stone-100 rounded-md shadow-lg"
-        >
-            <h1 class="text-3xl text-darkSky mb-4">Login</h1>
-            <!-- Email input -->
-            <div class="flex flex-col mb-2">
+        <!-- Login section -->
+        <section v-if=!passDiv class="max-w-screen-lg mx-auto px-4 py-20 md:w-1/2 lg:w-1/3">
+            <!-- Login Form -->
+            <form 
+                @submit.prevent="login" 
+                class="mb-2 p-8 flex w-full flex-col bg-stone-100 rounded-md shadow-lg"
+            >
+                <h1 class="text-3xl text-darkSky mb-4">Login</h1>
+                <!-- Email input -->
+                <div class="flex flex-col mb-2">
+                    <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
+                    <input 
+                        type="text" 
+                        required 
+                        class="p-2 focus:outline-none"
+                        name="email"
+                        autocomplete="email"
+                        id="email"
+                        v-model="email"
+                    >
+                </div>
+                <!-- Password Input -->
+                <div class="flex flex-col mb-2">
+                    <label for="password" class="mb-1 text-sm text-darkSky">Password</label>
+                    <input 
+                        type="password" 
+                        required 
+                        class="p-2 focus:outline-none"
+                        id="password"
+                        v-model="password"
+                    >
+                </div>
+                
+                <!-- Login Submit Button -->
+                <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
+                    Login
+                </button>
+
+                <!-- Router link for registration -->
+                <router-link 
+                    class="text-sm mt-6 text-center" 
+                    :to="{ name: 'Register' }"
+                >
+                    Don't have an account? <span class="text-darkSky hover:text-lightSky">Register</span>
+                </router-link>
+
+                <!-- Text to open password recovery input -->
+                <p @click="openPassDiv" class="text-sm mt-2 text-center hover:cursor-pointer">
+                    Having trouble signing in? <span class="text-darkSky hover:text-lightSky">Click here</span>
+                </p>
+            </form>
+        </section>
+
+        <!-- Password Recovery section  -->
+        <section v-if="passDiv" class="max-w-screen-lg mx-auto px-4 py-20 md:w-1/2 lg:w-1/3">
+            <!-- Password recovery form -->
+            <form 
+                @submit.prevent="recover"
+                class="p-8 flex flex-col w-full bg-stone-100 rounded-md shadow-lg"
+            >
+
+                <h1 class="text-3xl text-darkSky mb-4">Password Recovery</h1>
+
+                <!-- Recovery email input -->
                 <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
                 <input 
-                    type="text" 
-                    required 
-                    class="p-2 focus:outline-none"
-                    name="email"
-                    autocomplete="email"
-                    id="email"
-                    v-model="email"
+                        type="text" 
+                        required 
+                        class="p-2 focus:outline-none" id="email" 
+                        v-model="recoveryEmail"
                 >
-            </div>
-            <!-- Password Input -->
-            <div class="flex flex-col mb-2">
-                <label for="password" class="mb-1 text-sm text-darkSky">Password</label>
-                <input 
-                    type="password" 
-                    required 
-                    class="p-2 focus:outline-none"
-                    id="password"
-                    v-model="password"
-                >
-            </div>
-            
-            <!-- Login Submit Button -->
-            <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
-                Login
-            </button>
 
-            <!-- Router link for registration -->
-            <router-link 
-                class="text-sm mt-6 text-center" 
-                :to="{ name: 'Register' }"
-            >
-                Don't have an account? <span class="text-darkSky hover:text-lightSky">Register</span>
-            </router-link>
-
-            <!-- Text to open password recovery input -->
-            <p @click="openPassDiv" class="text-sm mt-2 text-center hover:cursor-pointer">
-                Having trouble signing in? <span class="text-darkSky hover:text-lightSky">Click here</span>
-            </p>
-        </form>
-    </section>
-
-    <!-- Password Recovery  -->
-    <section v-if="passDiv" class="max-w-screen-md mx-auto w-96 mb-56 px-4 py-20 md:w-1/2 lg:w-1/3">
-
-        <!-- Password recovery form -->
-        <form 
-            @submit.prevent="recover"
-            class="p-8 flex flex-col bg-stone-100 rounded-md shadow-lg"
-        >
-
-            <h1 class="text-3xl text-darkSky mb-4">Password Recovery</h1>
-
-            <!-- Recovery email input -->
-            <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
-            <input 
-                    type="text" 
-                    required 
-                    class="p-2 focus:outline-none" id="email" 
-                    v-model="recoveryEmail"
-            >
-
-            <!-- Submit email button -->
-            <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
-                Send Recovery Email
-            </button>
-            <!-- Text to return to Login form -->
-            <p @click="closePassDiv" class="text-sm mt-6 text-center hover:cursor-pointer">
-                Return to Login <span class="text-darkSky hover:text-lightSky">Click here</span>
-            </p>
-        </form>
-    </section>
+                <!-- Submit email button -->
+                <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
+                    Send Recovery Email
+                </button>
+                <!-- Text to return to Login form -->
+                <p @click="closePassDiv" class="text-sm mt-6 text-center hover:cursor-pointer">
+                    Return to Login <span class="text-darkSky hover:text-lightSky">Click here</span>
+                </p>
+            </form>
+        </section>
 </template>
 
 <script setup>
