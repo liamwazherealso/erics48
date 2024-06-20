@@ -1,6 +1,6 @@
 <template>
     <!-- Landing page section -->
-    <section class="landing mb-10">
+    <section class="landing hidden lg:block mb-10">
         <div class="p-8 flex flex-col items-center">
             <h1 class="text-4xl text-white font-bold mb-16 mt-48">
                 Chronicle your White Mountain adventures
