@@ -121,79 +121,78 @@
 </template>
 
 <script setup>
-// Imports
-import { ref } from 'vue';
-import { supabase } from '@/supabase/supabaseClient';
-import { useToast } from 'vue-toastification';
-import peaks from '@/peaks.json';
-import Autocomplete from '@/components/Autocomplete.vue';
+    // Imports:
+    import { ref } from 'vue';
+    import { supabase } from '@/supabase/supabaseClient';
+    import { useToast } from 'vue-toastification';
+    import peaks from '@/peaks.json';
+    import Autocomplete from '@/components/Autocomplete.vue';
 
-// Create data
-const mountainName = ref(null);
-const trailName = ref(null);
-const hikeDate = ref(getCurrentDate());
-const hikeDuration = ref('00:00');
-const trailConditions = ref('select-condition');
-const hikeDifficulty = ref(null);
-const hikeReview = ref(null);
-const username = ref(null);
-const uuid = ref(null);
-const toast = useToast();
+    // Data:
+    const mountainName = ref(null);
+    const trailName = ref(null);
+    const hikeDate = ref(getCurrentDate());
+    const hikeDuration = ref('00:00');
+    const trailConditions = ref('select-condition');
+    const hikeDifficulty = ref(null);
+    const hikeReview = ref(null);
+    const username = ref(null);
+    const uuid = ref(null);
+    const toast = useToast();
 
-// getCurrentDate function
-function getCurrentDate() {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    return `${month}/${day}/${year}`;
-};
+    // getCurrentDate function
+    function getCurrentDate() {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        return `${month}/${day}/${year}`;
+    };
 
-// Create hike function
-const createHike =  async () => {
-    try {
-        // Retrieve username from user metadata
-        const { data: { user } } = await supabase.auth.getUser();
-            const metadata = user.user_metadata;
-            username.value = metadata.username;
-            uuid.value = metadata.sub;
+    // Create hike function
+    const createHike =  async () => {
+        try {
+            // Retrieve username from user metadata
+            const { data: { user } } = await supabase.auth.getUser();
+                const metadata = user.user_metadata;
+                username.value = metadata.username;
+                uuid.value = metadata.sub;
 
-        // Insert data into the 'hikes' table in Supabase
-        const { error } = await supabase.from('hikes').insert([
-            {
-                mountainName: mountainName.value,
-                trailName: trailName.value,
-                hikeDate: hikeDate.value,
-                hikeDuration: hikeDuration.value,
-                trailConditions: trailConditions.value,
-                hikeDifficulty: hikeDifficulty.value,
-                hikeReview: hikeReview.value,
-                username: username.value,
-                uuid: uuid.value
-            },
-        ]);
+            // Insert data into the 'hikes' table in Supabase
+            const { error } = await supabase.from('hikes').insert([
+                {
+                    mountainName: mountainName.value,
+                    trailName: trailName.value,
+                    hikeDate: hikeDate.value,
+                    hikeDuration: hikeDuration.value,
+                    trailConditions: trailConditions.value,
+                    hikeDifficulty: hikeDifficulty.value,
+                    hikeReview: hikeReview.value,
+                    username: username.value,
+                    uuid: uuid.value
+                },
+            ]);
 
-        // If error is present, send to the catch block
-        if (error) throw error;
+            // If error is present, send to the catch block
+            if (error) throw error;
 
-        // Alert user of success
-        toast.success('Hike logged!');
+            // Alert user of success
+            toast.success('Hike logged!');
 
-        // Reset all variables that sent data to Supabase
-        mountainName.value = 'select-mountain';
-        trailName.value = null;
-        hikeDate.value = getCurrentDate();
-        hikeDuration.value = '00:00';
-        trailConditions.value = 'select-condition';
-        hikeDifficulty.value = null;
-        hikeReview.value = null;
-        username.value = null;
+            // Reset all variables that sent data to Supabase
+            mountainName.value = 'select-mountain';
+            trailName.value = null;
+            hikeDate.value = getCurrentDate();
+            hikeDuration.value = '00:00';
+            trailConditions.value = 'select-condition';
+            hikeDifficulty.value = null;
+            hikeReview.value = null;
+            username.value = null;
 
-    }
-    catch (error) {
-        // Render error message
-        toast.error(`Error: ${error.message}`);
-    }
-};
-
+        }
+        catch (error) {
+            // Render error message
+            toast.error(`Error: ${error.message}`);
+        }
+    };
 </script>

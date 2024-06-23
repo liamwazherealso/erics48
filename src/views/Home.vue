@@ -57,17 +57,19 @@
 </template>
 
 <script setup>
-    // Imports
+    // Imports:
     import { ref, onMounted } from 'vue';
     import { supabase } from '@/supabase/supabaseClient';
     import { useToast } from 'vue-toastification';
 
-    // Create data
+    // Data:
     const data = ref([]);
     const dataLoaded = ref(false);
     const toast = useToast();
     const page = ref(1);
     const limit = 10; // Number of hikes to fetch per page
+
+    // Methods:
 
     // Get data
     const getData = async () => {
@@ -112,7 +114,3 @@
         window.addEventListener('scroll', handleScroll);
     });
 </script>
-
-<style scoped>
-
-</style>

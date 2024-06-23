@@ -89,58 +89,57 @@
 </template>
 
 <script setup>
-// Imports
-import { ref } from 'vue';
-import { supabase } from '../supabase/supabaseClient.js';
-import { useRouter } from 'vue-router';
-import { useToast } from 'vue-toastification';
+    // Imports:
+    import { ref } from 'vue';
+    import { supabase } from '../supabase/supabaseClient.js';
+    import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
 
-// Data and variables
-const router = useRouter();
-const email = ref(null);
-const username = ref(null);
-const password = ref(null);
-const confirmPassword = ref(null);
-const toast = useToast();
+    // Data:
+    const router = useRouter();
+    const email = ref(null);
+    const username = ref(null);
+    const password = ref(null);
+    const confirmPassword = ref(null);
+    const toast = useToast();
 
+    // Methods:
 
-// Register function
-const register = async () => {
-    // If the password matches the confirmed password
-    if (password.value === confirmPassword.value) {
-        try {
-            // Try to sign up the user
-            const { error } = await supabase.auth.signUp({
-                email: email.value,
-                password: password.value,
-                options: {
-                    data: {
-                        username: username.value,
+    // Register function
+    const register = async () => {
+        // If the password matches the confirmed password
+        if (password.value === confirmPassword.value) {
+            try {
+                // Try to sign up the user
+                const { error } = await supabase.auth.signUp({
+                    email: email.value,
+                    password: password.value,
+                    options: {
+                        data: {
+                            username: username.value,
+                        },
                     },
-                },
-            });
-            // If supabase presents an error, throw it:
-            if (error) throw error;
+                });
+                // If supabase presents an error, throw it:
+                if (error) throw error;
 
-            // Alert user to check their email to confirm
-            toast.info('Check your email to confirm your account');
+                // Alert user to check their email to confirm
+                toast.info('Check your email to confirm your account');
 
-            // If everything checks out, push the user to the Login page
-            router.push({ name: "Login" });
+                // If everything checks out, push the user to the Login page
+                router.push({ name: "Login" });
+            }
+            catch (error) {
+                // Alert the user of the Supabase error
+                toast.error(`Error: ${error.message}`);
+            }
+            return;
         }
-        catch (error) {
-            // Alert the user of the Supabase error
-            toast.error(`Error: ${error.message}`);
+        // If the passwords do not match:
+        else {
+            toast.warning('Passwords do not match');
         }
-        return;
-    }
-    // If the passwords do not match:
-    else {
-        toast.warning('Passwords do not match');
-    }
-};
-
-
+    };
 </script>
 
 <style>

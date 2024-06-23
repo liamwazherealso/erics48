@@ -221,7 +221,7 @@
 </template>
 
 <script setup>
-    // Imports
+    // Imports:
     import { ref } from 'vue';
     import { supabase } from '@/supabase/supabaseClient';
     import { useRoute, useRouter } from 'vue-router';
@@ -230,12 +230,9 @@
     import peaks from '@/peaks.json';
     import Autocomplete from '@/components/Autocomplete.vue';
 
-
-    // Create data
+    // Data:
     const data = ref(null);
     const dataLoaded = ref(null);
-    const errorMsg = ref(null);
-    const statusMsg = ref(null);
     const route = useRoute();
     const router = useRouter();
     const uuid = ref(null);
@@ -247,6 +244,8 @@
 
     // Check to see if user is logged in
     const user = store.state.user;
+
+    // Methods:
 
     // Get hike data
     const getData = async () => {

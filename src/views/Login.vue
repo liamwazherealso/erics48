@@ -84,74 +84,72 @@
 </template>
 
 <script setup>
-// Imports
-import { ref } from 'vue';
-import { supabase } from '../supabase/supabaseClient';
-import { useRouter } from 'vue-router';
-import { useToast } from 'vue-toastification';
- 
-// Data and variables
-const router = useRouter();
-const email = ref(null);
-const password = ref(null);
-const passDiv = ref(false);
-const recoveryEmail = ref(null);
-const toast = useToast();
+    // Imports:
+    import { ref } from 'vue';
+    import { supabase } from '../supabase/supabaseClient';
+    import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
+    
+    // Data:
+    const router = useRouter();
+    const email = ref(null);
+    const password = ref(null);
+    const passDiv = ref(false);
+    const recoveryEmail = ref(null);
+    const toast = useToast();
 
-// Login function
-const login = async () => {
-    // Try to sign in the user
-    try {
-        const { error } = await supabase.auth.signInWithPassword({
-            email: email.value,
-            password: password.value,
-        });
+    // Methods:
 
-        // If an error is detected, this condition will throw the user into the catch block
-        if (error) throw error;
+    // Login function
+    const login = async () => {
+        // Try to sign in the user
+        try {
+            const { error } = await supabase.auth.signInWithPassword({
+                email: email.value,
+                password: password.value,
+            });
 
-        console.log('User is logged in');
+            // If an error is detected, this condition will throw the user into the catch block
+            if (error) throw error;
 
-        // Alert user to succesful login
-        toast.info('You have successfully logged in');
+            console.log('User is logged in');
 
-        // If no error received, push the user to the 'Home' view
-        router.push({ name: "Home" });        
-    }
-    catch (error) {
-        // Interpolate error into Vue toast
-        toast.error(`Error: ${error.message}`);
-    }
-};
+            // Alert user to succesful login
+            toast.info('You have successfully logged in');
 
-// Open password recovery function
-const openPassDiv = () => {
-    passDiv.value = true;
-};
+            // If no error received, push the user to the 'Home' view
+            router.push({ name: "Home" });        
+        }
+        catch (error) {
+            // Interpolate error into Vue toast
+            toast.error(`Error: ${error.message}`);
+        }
+    };
 
-// Close password recovery function
-const closePassDiv = () => {
-    passDiv.value = false;
-};
+    // Open password recovery function
+    const openPassDiv = () => {
+        passDiv.value = true;
+    };
 
-// Send password recovery email function
-const recover = async () => {
-    try {
-        const { data, error } = await supabase.auth.resetPasswordForEmail(recoveryEmail.value, {
-            redirectTo: 'https://erics48.vercel.app/reset',
-        });
-        // If an error is detected, this condition will throw the user into the catch block
-        if (error) throw error;
-        // Alert user of success
-        toast.info('Check your email for the password recovery link');
-    }
-    catch (error) {
-        // Alert user of Supabase error
-        toast.error(`Error: ${error,message}`);
-    }
-};
+    // Close password recovery function
+    const closePassDiv = () => {
+        passDiv.value = false;
+    };
+
+    // Send password recovery email function
+    const recover = async () => {
+        try {
+            const { data, error } = await supabase.auth.resetPasswordForEmail(recoveryEmail.value, {
+                redirectTo: 'https://erics48.vercel.app/reset',
+            });
+            // If an error is detected, this condition will throw the user into the catch block
+            if (error) throw error;
+            // Alert user of success
+            toast.info('Check your email for the password recovery link');
+        }
+        catch (error) {
+            // Alert user of Supabase error
+            toast.error(`Error: ${error,message}`);
+        }
+    };
 </script>
-
-<style scoped>
-
-</style>  

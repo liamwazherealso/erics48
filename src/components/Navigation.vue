@@ -73,111 +73,114 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { supabase } from '@/supabase/supabaseClient';
-import { useRouter } from 'vue-router';
-import store from '../store/index';
-import { useToast } from 'vue-toastification';
+  // Imports:
+  import { ref, computed, onMounted, onUnmounted } from 'vue';
+  import { supabase } from '@/supabase/supabaseClient';
+  import { useRouter } from 'vue-router';
+  import store from '../store/index';
+  import { useToast } from 'vue-toastification';
 
-// Data
-const userName = ref(null);
-const toast = useToast();
-const scrollNav = ref(null);
-const mobile = ref(false);
-const mobileNav = ref(null);
-const windowWidth = ref(window.innerWidth);
+  // Data:
+  const userName = ref(null);
+  const toast = useToast();
+  const scrollNav = ref(null);
+  const mobile = ref(false);
+  const mobileNav = ref(null);
+  const windowWidth = ref(window.innerWidth);
 
-console.log(mobile.value);
+  // Get user from store
+  const user = computed(() => store.state.user);
 
-// Get user from store
-const user = computed(() => store.state.user);
 
-// Get username function
-const getUsername = async () => {
-  try {
-    // Check to see if user is logged in
-    if (user.value) {
-      // Access the user object metadata from supabase to gain username
-      const { data: { user, error } } = await supabase.auth.getUser();
-      // If Supabase returns an error, throw to the catch block
-      if (error) throw error;
+  // Methods:
 
-      const metadata = user.user_metadata;
-      // Assign value of username to userName
-      userName.value = metadata.username;
+  // Get username function
+  const getUsername = async () => {
+    try {
+      // Check to see if user is logged in
+      if (user.value) {
+        // Access the user object metadata from supabase to gain username
+        const { data: { user, error } } = await supabase.auth.getUser();
+        // If Supabase returns an error, throw to the catch block
+        if (error) throw error;
+
+        const metadata = user.user_metadata;
+        // Assign value of username to userName
+        userName.value = metadata.username;
+      }
+    } catch (error) {
+      // Alert user of error
+      console.warn(error.message);
     }
-  } catch (error) {
-    // Alert user of error
-    console.warn(error.message);
-  }
-};
+  };
 
-// When the user session changes, get the username
-supabase.auth.onAuthStateChange((_, session) => {
-  getUsername();
-});
+  // When the user session changes, get the username
+  supabase.auth.onAuthStateChange((_, session) => {
+    getUsername();
+  });
 
-// Setup ref to router
-const router = useRouter();
+  // Setup ref to router
+  const router = useRouter();
 
-// Logout function
-const logout = async () => {
-  // Inform supabase that the user has logged out
-  await supabase.auth.signOut();
+  // Logout function
+  const logout = async () => {
+    // Inform supabase that the user has logged out
+    await supabase.auth.signOut();
 
-  console.log('User is logged out');
+    console.log('User is logged out');
 
-  // Alert the user of a successful logout
-  toast.info('Your account has been logged out');
+    // Alert the user of a successful logout
+    toast.info('Your account has been logged out');
 
-  // Set the value of userName back to null
-  userName.value = null;
+    // Set the value of userName back to null
+    userName.value = null;
 
-  // Push the user back to the home page
-  router.push({ name: 'Home' });
-};
+    // Push the user back to the home page
+    router.push({ name: 'Home' });
+  };
 
-// Toggle mobile navigation function
-const toggleMobileNav = () => {
-  mobileNav.value = !mobileNav.value;
-};
+  // Toggle mobile navigation function
+  const toggleMobileNav = () => {
+    mobileNav.value = !mobileNav.value;
+  };
 
-// Add event listeners when the componenet is mounted
-onMounted(() => {
-  window.addEventListener('resize', checkScreen);
-  window.addEventListener('scroll', updateScroll);
-});
+  // Add event listeners when the componenet is mounted
+  onMounted(() => {
+    window.addEventListener('resize', checkScreen);
+    window.addEventListener('scroll', updateScroll);
+  });
 
-// ... And remove them when componenet is unmounted
-onUnmounted(() => {
-  window.addEventListener('resize', checkScreen);
-  window.addEventListener('scroll', updateScroll);
-});
+  // ... And remove them when componenet is unmounted
+  onUnmounted(() => {
+    window.addEventListener('resize', checkScreen);
+    window.addEventListener('scroll', updateScroll);
+  });
 
-// Update scroll position to add 'scrolledNav' class to navbar
-const updateScroll = () => {
-  const scrollPosition = window.scrollY;
-  if (scrollPosition > 50) {
-    scrollNav.value = true;
-    return;
-  }
-  else {
-    scrollNav.value = false;
-  }
-};
+  // Update scroll position to add 'scrolledNav' class to navbar
+  const updateScroll = () => {
+    const scrollPosition = window.scrollY;
+    if (scrollPosition > 50) {
+      scrollNav.value = true;
+      return;
+    }
+    else {
+      scrollNav.value = false;
+    }
+  };
 
-// Check screen width to update windowWidth and mobile values
-const checkScreen = () => {
-  windowWidth.value = window.innerWidth;
-  if (windowWidth.value <= 750) {
-    mobile.value = true;
-    return;
-  }
-  mobile.value = false;
-  mobileNav.value = false;
-};
+  // Check screen width to update windowWidth and mobile values
+  const checkScreen = () => {
+    windowWidth.value = window.innerWidth;
+    if (windowWidth.value <= 750) {
+      mobile.value = true;
+      return;
+    }
+    mobile.value = false;
+    mobileNav.value = false;
+  };
 </script>
 
+<!-- Scoped styles: -->
 <style lang="scss" scoped>
   header {
     z-index: 99;

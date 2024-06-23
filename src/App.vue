@@ -17,11 +17,13 @@
     // Store updates our value, or change in state
     import store from './store/index';
 
-    // Data and variables:
+    // Data:
     const appReady = ref(null);
 
     // Check to see if user is logged in:
     const user = supabase.auth.user;
+
+    // Methods:
 
     // If user does not exist, need to make the app ready:
     if (!user) {
@@ -33,10 +35,10 @@
         store.methods.setUser(session);
         appReady.value = true;
     });
-
 </script>
 
 <style lang="scss">
+    // Google fonts imports
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
     @import url("https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap");
 

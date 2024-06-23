@@ -32,9 +32,10 @@
 
 
 <script setup>
-
     // Imports:
     import { computed, ref, } from 'vue';
+
+    // Props & data:
 
     // Prop definition (peaks array imported on 'Loghike and Viewhike')
     const props = defineProps({
@@ -54,6 +55,8 @@
     // Reactive variables defined
     const search = ref(''); // Variable to store search query
     const isOpen = ref(false); // Variable to track whether dropdown will render
+
+    // Methods:
 
     // Computed property to filter search results based on input value
     const searchResults = computed(() => {

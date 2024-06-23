@@ -45,17 +45,19 @@
 </template>
 
 <script setup>
-    // Imports
+    // Imports:
     import { ref } from 'vue';
     import { supabase } from '../supabase/supabaseClient.js';
     import { useRouter } from 'vue-router';
     import { useToast } from 'vue-toastification';
 
-    // Data and variables
+    // Data:
     const newPassword = ref(null);
     const confirmPassword = ref(null);
     const router = useRouter();
     const toast = useToast();
+
+    // Methods:
 
     // Reset password function
     const reset = async () => {

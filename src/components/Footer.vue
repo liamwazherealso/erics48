@@ -44,14 +44,12 @@
 </template>
 
 <script setup>
-    // Imports
+    // Imports:
     import { computed } from 'vue';
     import { useRouter } from 'vue-router';
     import store from '../store/index';
 
-    // Data
+    // Data:
     const router = useRouter();
     const user = computed(() => store.state.user);
-
-
 </script>
