@@ -11,18 +11,18 @@
             </router-link>
         </div>
 
-        <!-- Data Cards -->
-        <div v-else class="flex flex-col space-y-20 items-center">
+        <!-- Hike Cards -->
+        <div v-else class="flex flex-col items-center">
 
             <!-- Logged Hikes Static Title -->
-            <div class="fixed top-20 items-center bg-lightStone w-full md:w-1/2 py-8 rounded-md border-b-4 border-darkSky">
+            <div class="fixed top-16 w-full md:w-1/2 bg-lightStone py-8 rounded-md border-b-4 border-darkSky z-10">
                 <h1 class="mt-8 mb-2 text-center text-4xl text-darkSky">Logged Hikes:</h1>
             </div>
-            
-            <div class="mt-24 w-full overflow-y-auto">
+
+            <div class="mt-24 w-full space-y-20 overflow-y-auto">
                 <!-- Individual Hike Cards -->
                 <router-link 
-                    class="flex flex-col items-center bg-lightStone py-10 px-20 my-10 shadow-md rounded-md cursor-pointer border-b-4 border-darkSky"
+                    class="flex flex-col items-center bg-lightStone py-10 px-20 my-10 shadow-md rounded-md cursor-pointer border-b-4 border-darkSky transition transform hover:scale-95 duration-300"
                     :to="{ name: 'View-Hike', params: { hikeId: hike.id } }"
                     v-for="(hike, index) in data"
                     :key="index"
@@ -58,30 +58,35 @@
 
 <script setup>
     // Imports
-    import { ref } from 'vue';
+    import { ref, onMounted } from 'vue';
     import { supabase } from '@/supabase/supabaseClient';
     import { useToast } from 'vue-toastification';
 
     // Create data
     const data = ref([]);
-    const dataLoaded = ref(null);
+    const dataLoaded = ref(false);
     const toast = useToast();
+    const page = ref(1);
+    const limit = 10; // Number of hikes to fetch per page
 
     // Get data
     const getData = async () => {
         // Try to contact supabase for hikes data
         try {
             // Await hikes data
-            const { data: hikes, error } = await supabase.from('hikes').select('*');
+            const { data: hikes, error } = await supabase
+                .from('hikes')
+                .select('*')
+                .range((page.value - 1) * limit, page.value * limit - 1);
 
             // If an error is received from supabase, throw it:
-            if (error) throw error;  
+            if (error) throw error;
 
-            // Assign the value of 'data' to the data response received
-            data.value = hikes;
+            // Append the fetched data to existing hikes data
+            data.value = [...data.value, ...hikes];
 
             // Update the value of 'dataLoaded' to true
-            dataLoaded.value = true; 
+            dataLoaded.value = true;
             
         }
 
@@ -94,10 +99,18 @@
     // Run data function
     getData();
 
+    // Infinite scroll handler
+    const handleScroll = () => {
+        const bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+        if (bottomOfWindow) {
+            page.value++;
+            getData();
+        }
+    };
 
-    
-    
-
+    onMounted(() => {
+        window.addEventListener('scroll', handleScroll);
+    });
 </script>
 
 <style scoped>

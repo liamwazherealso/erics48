@@ -10,12 +10,12 @@
                 Log your hikes down to the finest details
             </h3>
 
-            <a href="#registerSection" class="text-white mb-4 underline">
+            <a href="#registerSection" class="text-white mb-4 underline transition transform hover:scale-125 duration-300">
                 Register below
             </a>
             <!-- Font Awesome down arrow icon -->
             <a href="#registerSection">
-                <i class="fa-solid fa-arrow-down fa-beat fa-2xl mt-8" style="color: #fafafa;"></i>
+                <i class="fa-solid fa-arrow-down fa-beat fa-2xl mt-8 " style="color: #fafafa;"></i>
             </a>
         </div>
     </section>

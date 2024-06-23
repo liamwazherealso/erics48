@@ -11,9 +11,9 @@
             <div>
                 <h5 class="text-xl font-semibold mb-4">Quick Links</h5>
                 <ul class="flex flex-col">
-                    <router-link class="mb-2 hover:text-beige cursor-pointer" :to="{ name: 'Home' }">Home</router-link>
-                    <router-link class="mb-2 hover:text-beige cursor-pointer" :to="{ name: 'About' }">About</router-link>
-                    <li class="mb-2 hover:text-beige cursor-pointer">
+                    <router-link class="mb-2 p-1 hover:text-beige border-l-2 border-transparent hover:border-beige transition ease-in-out duration-300 cursor-pointer" :to="{ name: 'Home' }">Home</router-link>
+                    <router-link class="mb-2 p-1 hover:text-beige border-l-2 border-transparent hover:border-beige transition ease-in-out duration-300 cursor-pointer" :to="{ name: 'About' }">About</router-link>
+                    <li class="mb-2 p-1 hover:text-beige border-l-2 border-transparent hover:border-beige transition ease-in-out duration-300 cursor-pointer">
                         <a href="https://www.amc4000footer.org/the-lists-we-recognize.html">AMC 4,000 Footer Club</a>
                     </li>
                 </ul>
@@ -22,19 +22,19 @@
             <div>
                 <h5 class="text-xl font-semibold mb-6">Follow Me</h5>
                 <div class="flex space-x-4">
-                    <a href="https://www.facebook.com/eric.henderson.3958" class="hover:text-beige">
+                    <a href="https://www.facebook.com/eric.henderson.3958" class="hover:text-beige transition transform hover:scale-150 duration-300">
                         <i class="fab fa-facebook-f fa-2xl"></i>
                     </a>
-                    <a href="https://x.com/EricRHenderson" class="hover:text-beige">
+                    <a href="https://x.com/EricRHenderson" class="hover:text-beige transition transform hover:scale-150 duration-300">
                         <i class="fab fa-twitter fa-2xl"></i>
                     </a>
-                    <a href="https://www.instagram.com/ericrhenderson/" class="hover:text-beige">
+                    <a href="https://www.instagram.com/ericrhenderson/" class="hover:text-beige transition transform hover:scale-150 duration-300">
                         <i class="fab fa-instagram fa-2xl"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/eric-henderson-dev" class="hover:text-beige">
+                    <a href="https://www.linkedin.com/in/eric-henderson-dev" class="hover:text-beige transition transform hover:scale-150 duration-300">
                         <i class="fab fa-linkedin-in fa-2xl"></i>
                     </a>
-                    <a href="https://github.com/ehenderson828" class="hover:text-beige">
+                    <a href="https://github.com/ehenderson828" class="hover:text-beige transition transform hover:scale-150 duration-300">
                         <i class="fab fa-github fa-2xl"></i>
                     </a>
                 </div>

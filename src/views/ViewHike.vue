@@ -12,10 +12,10 @@
             <div
               v-if="match"
               class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer
-          bg-darkSky shadow-lg"
+          bg-darkSky shadow-lg transition transform hover:scale-125 duration-300"
               @click="editMode"
             >
-              <i class="fa-solid fa-pencil fa-sm" style="color: #ffffff;"></i>
+              <i class="fa-solid fa-pencil fa-sm " style="color: #ffffff;"></i>
             </div>
 
             <!-- Delete hike button  -->
@@ -23,7 +23,7 @@
               v-if="match"
               @click="deleteHike"
               class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer
-              bg-darkSky shadow-lg"
+              bg-darkSky shadow-lg transition transform hover:scale-125 duration-300"
             >
               <i class="fa-solid fa-trash-can fa-sm" style="color: #ffffff;"></i>
             </div>
