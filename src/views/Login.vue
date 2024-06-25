@@ -31,12 +31,10 @@
                         v-model="password"
                     >
                 </div>
-                
                 <!-- Login Submit Button -->
                 <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
                     Login
                 </button>
-
                 <!-- Router link for registration -->
                 <router-link 
                     class="text-sm mt-6 text-center" 
@@ -44,14 +42,12 @@
                 >
                     Don't have an account? <span class="text-darkSky hover:text-lightSky">Register</span>
                 </router-link>
-
                 <!-- Text to open password recovery input -->
                 <p @click="openPassDiv" class="text-sm mt-2 text-center hover:cursor-pointer">
                     Having trouble signing in? <span class="text-darkSky hover:text-lightSky">Click here</span>
                 </p>
             </form>
         </section>
-
         <!-- Password Recovery section  -->
         <section v-if="passDiv" class="max-w-screen-lg mx-auto px-4 py-20 md:w-1/2 lg:w-1/3">
             <!-- Password recovery form -->
@@ -59,9 +55,7 @@
                 @submit.prevent="recover"
                 class="p-8 flex flex-col w-full bg-stone-100 rounded-md shadow-lg"
             >
-
                 <h1 class="text-3xl text-darkSky mb-4">Password Recovery</h1>
-
                 <!-- Recovery email input -->
                 <label for="email" class="mb-1 text-sm text-darkSky">Email</label>
                 <input 
@@ -70,7 +64,6 @@
                         class="p-2 focus:outline-none" id="email" 
                         v-model="recoveryEmail"
                 >
-
                 <!-- Submit email button -->
                 <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-sky-400 duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
                     Send Recovery Email
@@ -108,15 +101,12 @@
                 email: email.value,
                 password: password.value,
             });
-
             // If an error is detected, this condition will throw the user into the catch block
             if (error) throw error;
-
+            // Log user state to console
             console.log('User is logged in');
-
             // Alert user to succesful login
             toast.info('You have successfully logged in');
-
             // If no error received, push the user to the 'Home' view
             router.push({ name: "Home" });        
         }

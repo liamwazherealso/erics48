@@ -1,8 +1,8 @@
 <template>
     <footer class="bg-lightBrown text-white py-8">
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Company Info -->
-            <div>
+            <!-- Developer Info -->
+            <div class="ml-8">
                 <h5 class="text-xl font-semibold mb-4">Developed by Eric Henderson</h5>
                 <p class="mb-2">&copy; 2024 Eric Henderson. All rights reserved.</p>
                 <p>henderson.develop@gmail.com</p>

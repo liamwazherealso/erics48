@@ -17,7 +17,6 @@
             >
               <i class="fa-solid fa-pencil fa-sm " style="color: #ffffff;"></i>
             </div>
-
             <!-- Delete hike button  -->
             <div
               v-if="match"
@@ -28,40 +27,33 @@
               <i class="fa-solid fa-trash-can fa-sm" style="color: #ffffff;"></i>
             </div>
           </div>
-
           <!-- Mountain image -->
           <img
             class="h-24 w-auto"
             src="@/assets/images/icons/mountain-icon.png"
             alt="mountain"
           />
-
           <!-- Mountain name and edit mode input -->
           <div class="w-full mt-6">
             <label for="mountain-name" class="mb-1 text-sm text-darkSky" v-if="edit">
               Mountain Name
             </label>
-
             <Autocomplete v-if="edit" :source="peaks" v-model="data.mountainName" />
-
             <!-- If edit mode has not been clicked -->
             <h1 v-else class="text-darkSky text-2xl text-center">
               {{ data.mountainName }}
             </h1>
           </div>
         </div>
-
         <!-- Additional Hike Info -->
         <div class="mt-10 p-8 rounded-md flex flex-col flex-wrap item-center
         bg-lightStone shadow-md"
         >
-
               <!-- Trail name container and label -->
               <div class="flex flex-1 flex-col">
                 <label for="trail-name" class="mb-1 text-sm text-darkSky">
                   Trail Name(s)
                 </label>
-
                 <!-- Trail name input if edit mode is toggled -->
                 <input 
                   v-if="edit"
@@ -72,18 +64,14 @@
                   placeholder="Enter trail name here"
                   v-model="data.trailName"
                   />
-
                   <!-- Trail name data if edit mode is not toggled -->
                 <p v-else>{{ data.trailName }}</p>
-
               </div>
-
               <!-- Hike date container and label -->
               <div class="flex flex-1 flex-col">
                 <label for="hike-date" class="mb-1 text-sm text-darkSky">
                   Date of Hike
                 </label>
-
                 <!-- Hike date input if edit mode is toggled -->
                 <input 
                   v-if="edit"
@@ -94,18 +82,14 @@
                   value=""
                   v-model="data.hikeDate"
                   />
-
                 <!-- Hike date data if edit mode is not toggled -->
                 <p v-else>{{ data.hikeDate }}</p>
-
               </div>
-              
               <!-- Hike duration container and label -->
               <div class="flex flex-1 flex-col">
                 <label for="hike-duration-edit" class="mb-1 text-sm text-darkSky">
                   Hike Duration
                 </label>
-
                 <!-- Hike duration input if edit mode is toggled -->
                 <input
                   v-if="edit"
@@ -117,18 +101,14 @@
                   class="p-2 w-full focus:outline-none"
                   v-model="data.hikeDuration"
                 />
-
                 <!-- Hike duration data if edit mode not toggled -->
                 <p v-else>{{ data.hikeDuration }}</p>
-
               </div>
-
               <!-- Trail condition container and label -->
               <div class="flex flex1 flex-col">
                   <label for="trail-conditions-edit" class="mb-1 text-sm text-darkSky">
                   Trail Conditions
                   </label>
-
                   <!-- Trail conditions select if edit mode is toggled -->
                   <select
                       v-if="edit"
@@ -147,18 +127,14 @@
                       <option value="dry">Dry Trail</option>
                       <option value="water">Running or Standing Water</option>
                   </select>
-
                   <!-- Trail conditions if edit mode not toggled -->
                   <p v-else>{{ data.trailConditions }}</p>
-
               </div>
-
               <!-- Hike difficulty container and label -->
               <div class="flex flex1 flex-col">
                   <label for="hike-difficulty-edit" class="mb-1 text-sm text-darkSky">
                       Hike Difficulty 
                   </label>
-
                   <!-- Hike Difficulty select if edit mode is toggled -->
                   <select
                       v-if="edit"
@@ -175,18 +151,14 @@
                       <option value="😖">😖</option>
                       <option value="🤬">🤬</option>
                   </select>
-
                   <!-- Hike difficulty data if edit mode not toggled -->
                   <p v-else>{{ data.hikeDifficulty }}</p>
-
               </div>
-
               <!-- Hike review container and label -->
               <div class="flex flex-1 flex-col">
                 <label for="hike-review-edit" class="mb-1 text-sm text-darkSky">
                   Hike Review
                 </label>
-
                 <!-- Hike review text area if edit mode is toggled -->
                 <textarea 
                       v-if="edit"
@@ -197,12 +169,9 @@
                       placeholder="Please include any further thoughts on the hike here"
                       v-model="data.hikeReview"
                 />
-
                 <!-- Hike review data if edit mode not toggled -->
                 <p v-else>{{ data.hikeReview }}</p>
-
               </div>
-
           <!-- Update button -->
           <button
             v-if="edit"
@@ -214,7 +183,6 @@
           >
             Update Hike
           </button>
-
         </div>
     </div>
   </div>
@@ -246,7 +214,6 @@
     const user = store.state.user;
 
     // Methods:
-
     // Get hike data
     const getData = async () => {
         // Try to contact supabase for hikes data
@@ -255,21 +222,16 @@
                 .from('hikes')
                 .select('*')
                 .eq('id', currentId);
-
             if (user) {
               // Retrieve username from user metadata
               const { data: { user } } = await supabase.auth.getUser();
               const metadata = user.user_metadata;
               uuid.value = metadata.sub;
             }
-            
-
             // If an error is received from supabase, throw it:
             if (error) throw error;
-
             // Assign the value of 'data' to the data response received
             data.value = hikes[0]; // This valued is returned from the database as an array
-
             // match will determine whether or not edit mode and delete mode should be rendered
             if (data.value.uuid == uuid.value) {
               match.value = true;
@@ -277,9 +239,7 @@
 
             // Update the value of 'dataLoaded' to true
             dataLoaded.value = true; 
-
         }
-
         // If an error is received, handle the error
         catch (error) {
           // Alert user of Suopabase error
@@ -296,20 +256,16 @@
         try {
           // Display a confirmation dialog
           const confirmed = window.confirm('Are you sure you want to delete this hike?');
-
           if (confirmed) {
             // Destructure the response from supabase, and catch the error if there is one
             const { error } = await supabase
                 .from('hikes')
                 .delete()
                 .eq('id', currentId);
-
             // If there's an error, throw the user to the catch block
             if (error) throw error;
-
             // Alert the user that their hike has been deleted
             toast.error('Your hike has been deleted');
-
             // Push the user back to the 'Home' route
             router.push({ name: "Home" });
           }
@@ -346,13 +302,10 @@
             hikeReview: data.value.hikeReview,
           })
           .eq('id', currentId);
-
           // If there's an error, throw to the catch block
           if (error) throw error;
-
           // Detoggle edit mode
           edit.value = false;
-
           // Toast a status message
           toast.success('Your hike has been successfully updated!');
       }

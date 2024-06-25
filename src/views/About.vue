@@ -12,7 +12,7 @@
                     My name is Eric Henderson and I love hiking in the White Mountains of New Hampshire. As of 2024, I have hiked 38 of the 48 White Mountain Four Thousand Footers. There is nothing quite like easing off of the internet for a while and taking in the <abbr title="White Mountain National Forest">WMNF's</abbr> beauty.
                 </p>
                 <p>
-                    I created Eric's 48 because hikers in the Whites deserve a simple platform in which they can share their experiences. This app creates a platform in which a hiker can easily provide data about their hikes and track their progress towards finishing their own 48. 
+                    I created Eric's 48 because hikers in the Whites deserve a simple platform in which they can share their experiences. This app creates a interface in which a hiker can easily provide data about their hikes and track their progress towards finishing their own 48. 
                 </p>
             </div>
         </div>

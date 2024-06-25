@@ -4,16 +4,14 @@
         <div class="w-full p-8 flex items-start bg-lightStone rounded-mb shadow-lg">
             <!-- Log Form -->
             <form @submit.prevent="createHike" class="flex flex-col gap-y-5 w-full">
-
+                <!-- Component heading -->
                 <h1 class="text-2xl text-darkSky">Log Hike</h1>
-
-                <!-- Mountain Name Input for Searching -->
+                <!-- Mountain Name Input for searching -->
                 <div>
                     <label for="mountain-name" class="mb-1 text-sm text-darkSky">Mountain Name</label>
-
+                    <!-- Autocomplete component, sourcing 'peaks.json' -->
                     <Autocomplete :source="peaks" v-model="mountainName" /> 
                 </div>
-
                 <!-- Trail Name Input -->
                 <div class="flex flex-col">
                     <label for="trail-name" class="text-sm mb-1 text-darkSky">Trail Name(s)</label>
@@ -26,7 +24,6 @@
                         v-model="trailName"
                     />
                 </div>
-
                 <!-- Hike Date Input -->
                 <div class="flex flex-col">
                     <label for="hike-date" class="text-sm mb-1 text-darkSky">Date of Hike</label>
@@ -39,7 +36,6 @@
                         v-model="hikeDate"
                     />
                 </div>
-
                 <!-- Hike Duration Input -->
                 <div class="flex flex-col">
                     <label for="hike-duration" class="text-sm mb-1 text-darkSky">How long did this hike last?</label>
@@ -53,7 +49,6 @@
                         v-model="hikeDuration"
                     />
                 </div>
-
                 <!-- Trail Condition Select -->
                 <div class="flex flex-col">
                     <label for="trail-conditions" class="text-sm mb-1 text-darkSky">Trail Condition</label>
@@ -74,7 +69,6 @@
                         <option value="water">Running or Standing Water</option>
                     </select>
                 </div>
-
                 <!-- Hike Difficulty Select -->
                 <div class="flex flex-col">
                     <label for="hike-difficulty" class="text-sm mb-1 text-darkSky">Hike Difficulty</label>
@@ -93,7 +87,6 @@
                         <option value="🤬">🤬</option>
                     </select>
                 </div>
-
                 <!-- Hike Review Textfield-->
                 <div class="flex flex-col">
                     <label for="hike-review" class="text-sm mb-1 text-darkSky">Notes</label>
@@ -106,7 +99,6 @@
                         v-model="hikeReview"
                     />
                 </div>
-
                 <!-- Submit Button -->
                 <button 
                     type="submit" 
@@ -114,7 +106,6 @@
                 >
                 Submit Hike Log
                 </button>
-
             </form>
         </div>
     </div>
@@ -157,7 +148,6 @@
                 const metadata = user.user_metadata;
                 username.value = metadata.username;
                 uuid.value = metadata.sub;
-
             // Insert data into the 'hikes' table in Supabase
             const { error } = await supabase.from('hikes').insert([
                 {
@@ -172,13 +162,10 @@
                     uuid: uuid.value
                 },
             ]);
-
-            // If error is present, send to the catch block
+            // If error is present, throw to the catch block
             if (error) throw error;
-
             // Alert user of success
             toast.success('Hike logged!');
-
             // Reset all variables that sent data to Supabase
             mountainName.value = 'select-mountain';
             trailName.value = null;
@@ -188,7 +175,6 @@
             hikeDifficulty.value = null;
             hikeReview.value = null;
             username.value = null;
-
         }
         catch (error) {
             // Render error message

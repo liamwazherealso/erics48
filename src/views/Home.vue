@@ -10,15 +10,12 @@
                 Log Hike
             </router-link>
         </div>
-
         <!-- Hike Cards -->
         <div v-else class="flex flex-col items-center">
-
             <!-- Logged Hikes Static Title -->
             <div class="fixed top-16 w-full md:w-1/2 bg-lightStone py-8 rounded-md border-b-4 border-darkSky z-10">
                 <h1 class="mt-8 mb-2 text-center text-4xl text-darkSky">Logged Hikes:</h1>
             </div>
-
             <div class="mt-24 w-full space-y-20 overflow-y-auto">
                 <!-- Individual Hike Cards -->
                 <router-link 
@@ -33,26 +30,24 @@
                         alt="mountain-icon"
                         class="h-24 w-auto"
                     />
-
+                    <!-- Mountain name -->
                     <p 
                         class="mt-6 py-1 px-3 text-white bg-darkSky shadow-md rounded-lg"
                     >
                         {{ hike.mountainName }}
                     </p>
-
+                    <!-- Date hiked -->
                     <h1 class="mt-8 mb-2 text-center text-xl text-darkSky">
                         {{ hike.hikeDate }}
                     </h1>
-
+                    <!-- Hike creator -->
                     <h1 class="flex items-center gap-x-2 mt-8 mb-2 text-xl text-yellow-400">
                         <i class="fa-regular fa-user fa-lg" style="color: #FFD43B;"></i>
                         {{ hike.username }}
                     </h1>
-
                 </router-link>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -70,8 +65,7 @@
     const limit = 10; // Number of hikes to fetch per page
 
     // Methods:
-
-    // Get data
+    // Get data function
     const getData = async () => {
         // Try to contact supabase for hikes data
         try {
@@ -80,18 +74,13 @@
                 .from('hikes')
                 .select('*')
                 .range((page.value - 1) * limit, page.value * limit - 1);
-
-            // If an error is received from supabase, throw it:
+            // If an error is received from supabase, throw to the catch block:
             if (error) throw error;
-
-            // Append the fetched data to existing hikes data
+            // Append the selected data to existing hikes data
             data.value = [...data.value, ...hikes];
-
             // Update the value of 'dataLoaded' to true
             dataLoaded.value = true;
-            
         }
-
         // If an error is received, warn the user
         catch (error) {
             toast.error(`Error: ${error.message}`);
@@ -110,6 +99,7 @@
         }
     };
 
+    // Listen for the scroll event as soon as the component is mounted
     onMounted(() => {
         window.addEventListener('scroll', handleScroll);
     });

@@ -14,7 +14,7 @@
         </router-link>
         <h1 class="text-2xl font-ProtestRiot">Eric's 48</h1>
       </div>
-      <!-- Hamburger Menu Icon -->
+      <!-- MobileNav Menu Icon -->
       <div class="icon">
         <i  @click="toggleMobileNav" v-show="mobile" class="fa fa-bars fa-lg" style="color: #ffffff;" :class="{ 'icon-active': mobileNav }"></i>
       </div>
@@ -103,7 +103,6 @@
         const { data: { user, error } } = await supabase.auth.getUser();
         // If Supabase returns an error, throw to the catch block
         if (error) throw error;
-
         const metadata = user.user_metadata;
         // Assign value of username to userName
         userName.value = metadata.username;
@@ -113,28 +112,24 @@
       console.warn(error.message);
     }
   };
-
   // When the user session changes, get the username
   supabase.auth.onAuthStateChange((_, session) => {
     getUsername();
   });
 
-  // Setup ref to router
+  // Setup ref to use router
   const router = useRouter();
 
   // Logout function
   const logout = async () => {
     // Inform supabase that the user has logged out
     await supabase.auth.signOut();
-
+    // Log to the console that the user has logged out
     console.log('User is logged out');
-
     // Alert the user of a successful logout
     toast.info('Your account has been logged out');
-
     // Set the value of userName back to null
     userName.value = null;
-
     // Push the user back to the home page
     router.push({ name: 'Home' });
   };
@@ -144,7 +139,7 @@
     mobileNav.value = !mobileNav.value;
   };
 
-  // Add event listeners when the componenet is mounted
+  // Add event listeners when the componenet is mounted for resizing and scrolling
   onMounted(() => {
     window.addEventListener('resize', checkScreen);
     window.addEventListener('scroll', updateScroll);

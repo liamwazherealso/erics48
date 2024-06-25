@@ -15,7 +15,6 @@
                     v-model="newPassword"
                 >
             </div>
-
             <!-- Confirm Password Input -->
             <div class="flex flex-col mb-2">
                 <label for="confirmPassword" class="mb-1 text-sm text-darkSky">Confirm Password</label>
@@ -27,19 +26,16 @@
                     v-model="confirmPassword"
                 >
             </div>
-            
             <!-- Reset Submit Button -->
             <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-lightStone bg-darkSky duration-200 border-solid border-2 border-transparent hover:bg-lightStone hover:text-darkSky hover:border-darkSky">
                 Reset password
             </button>
-
             <router-link 
                 class="text-sm mt-6 text-center" 
                 :to="{ name: 'Login' }"
             >
                 Already have an account? <span class="text-sky-400 hover:text-lightSky">Login</span>
             </router-link>
-
         </form>
     </section>
 </template>
@@ -58,7 +54,6 @@
     const toast = useToast();
 
     // Methods:
-
     // Reset password function
     const reset = async () => {
         // If the new and confirmed passwords match
@@ -68,16 +63,12 @@
                 const { data, error } = await supabase.auth.updateUser({
                     password: newPassword.value
                 });
-
                 // Alert the user that their password has been changed successfully
                 toast.success('Your password has successfully been changed');
-
                 // Inform supabase that the user has logged out
                 await supabase.auth.signOut();
-
                 // Push the user to the login page
                 router.push({ name: "Login" });
-
                 // If error, throw to the catch block
                 if (error) throw error;
             }
